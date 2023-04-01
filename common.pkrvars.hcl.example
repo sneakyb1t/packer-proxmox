@@ -1,0 +1,8 @@
+proxmox_url = ""
+proxmox_node = ""
+proxmox_username = ""
+proxmox_password = ""
+proxmox_datastore = ""
+provision_username= ""
+provision_password = ""
+proxmox_vm_id = "0"
