@@ -1,9 +1,9 @@
 #cloud-config
 autoinstall:
   version: 1
-  locale: ${vm_guest_os_timezone}
+  locale: ${vm_timezone}
   keyboard:
-    layout: ${vm_guest_os_keyboard}
+    layout: ${vm_keyboard}
   ssh:
     install-server: true
     allow-pw: true
@@ -36,7 +36,7 @@ autoinstall:
       ## Format
       - id: vda1-boot
         type: format
-        fstype: ${vm_guest_os_fstype}
+        fstype: ${vm_fstype}
         label: BOOT
         volume: vda1
       ## Mount
@@ -75,7 +75,7 @@ autoinstall:
       - id: format-root
         type: format
         volume: sys-root
-        fstype: ${vm_guest_os_fstype}
+        fstype: ${vm_fstype}
         label: ROOT
       ## Mount
       - id: mount-root
@@ -94,7 +94,7 @@ autoinstall:
       - id: format-tmp
         type: format
         volume: sys-tmp
-        fstype: ${vm_guest_os_fstype}
+        fstype: ${vm_fstype}
         label: TMP
       ## Mount
       - id: mount-tmp
@@ -113,7 +113,7 @@ autoinstall:
       - id: format-var
         type: format
         volume: sys-var
-        fstype: ${vm_guest_os_fstype}
+        fstype: ${vm_fstype}
         label: VAR
       ## Mount
       - id: mount-var
@@ -132,7 +132,7 @@ autoinstall:
       - id: format-log
         type: format
         volume: sys-log
-        fstype: ${vm_guest_os_fstype}
+        fstype: ${vm_fstype}
         label: LOG
       ## Mount
       - id: mount-log
@@ -151,7 +151,7 @@ autoinstall:
       - id: format-usr
         type: format
         volume: sys-usr
-        fstype: ${vm_guest_os_fstype}
+        fstype: ${vm_fstype}
         label: USR
       ## Mount
       - id: mount-usr
@@ -160,7 +160,7 @@ autoinstall:
         path: /usr
   user-data:
     package_upgrade: true
-    timezone: ${vm_guest_os_timezone}
+    timezone: ${vm_timezone}
     users:
       - name: ${build_username}
         passwd: ${build_password_encrypted}

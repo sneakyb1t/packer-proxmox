@@ -1,3 +1,4 @@
-iso_file = ""
+iso_file              = ""
 proxmox_template_name = ""
-vm_guest_os_hostname = ""
+vm_hostname           = ""
+vm_disk_size          = ""
