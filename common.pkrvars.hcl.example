@@ -1,8 +1,15 @@
+// Proxmox vars
 proxmox_url = ""
 proxmox_node = ""
 proxmox_username = ""
 proxmox_password = ""
 proxmox_datastore = ""
-provision_username= ""
-provision_password = ""
+
+// VM Vars
 proxmox_vm_id = "0"
+build_username= ""
+build_password = ""
+build_password_encrypted = ""
+vm_guest_os_timezone = "en_US"
+vm_guest_os_keyboard = "fr"
+vm_guest_os_fstype = "ext4"
