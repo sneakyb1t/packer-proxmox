@@ -1,0 +1,3 @@
+iso_file = ""
+proxmox_template_name = ""
+vm_guest_os_hostname = ""
