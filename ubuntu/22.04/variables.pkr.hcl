@@ -51,35 +51,38 @@ variable "iso_file" {
   type = string
 }
 
-variable "build_username" {
+variable "vm_username" {
   type    = string
   sensitive = true
   default = "packer"
 }
 
-variable "build_password" {
+variable "vm_password" {
   type      = string
   sensitive = true
   default   = "packer"
 }
 
-variable "build_password_encrypted" {
+variable "vm_password_encrypted" {
   type      = string
   sensitive = true
   default   = "$5$xwGN5Dp4pJTfUs/4$yxIOrbw/loX7UXVm79VHUi6am150kPaYfEyiTtWLcg7"
 }
 
-// VM vars
-variable "vm_keyboard" {
+variable "vm_pubkey" {
   type    = string
-  default = "us"
 }
 
 variable "vm_hostname" {
   type = string
 }
 
-variable "vm_fstype" {
+variable "vm_keyboard" {
+  type    = string
+  default = "us"
+}
+
+variable "vm_fs_type" {
   type    = string
   default = "ext4"
 }
@@ -115,4 +118,39 @@ variable "vm_net_bridge_name" {
 variable "vm_net_firewall" {
   type    = bool
   default = true
+}
+
+// Partitioning
+variable "vm_part_efi_size" {
+  type    = string
+  default = "100M"
+}
+
+variable "vm_part_boot_size" {
+  type    = string
+  default = "824M"
+}
+
+variable "vm_part_root_size" {
+  type    = string
+  default = "2048M"
+}
+variable "vm_part_tmp_size" {
+  type    = string
+  default = "1024M"
+}
+
+variable "vm_part_var_size" {
+  type    = string
+  default = "3072M"
+}
+
+variable "vm_part_log_size" {
+  type    = string
+  default = "2048M"
+}
+
+variable "vm_part_usr_size" {
+  type    = string
+  default = "-1"
 }

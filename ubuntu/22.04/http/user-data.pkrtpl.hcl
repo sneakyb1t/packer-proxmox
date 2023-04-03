@@ -1,172 +1,69 @@
 #cloud-config
 autoinstall:
   version: 1
-  locale: ${vm_timezone}
   keyboard:
     layout: ${vm_keyboard}
-  ssh:
-    install-server: true
-    allow-pw: true
+    toggle: null
+    variant: ''
+  locale: ${vm_timezone}
+  storage:
+    config:
+    # Partition table
+    - { ptable: gpt, path: /dev/vda, wipe: superblock, preserve: false, name: '', grub_device: false, type: disk, id: disk-vda }
+    # EFI boot partition
+    - { device: disk-vda, size: ${vm_part_efi_size}, wipe: superblock, flag: boot, number: 1, preserve: false, grub_device: true, type: partition, id: partition-0 }
+    - { fstype: fat32, volume: partition-0, preserve: false, type: format, id: format-0 }
+    # Linux boot partition
+    - { device: disk-vda, size: ${vm_part_boot_size}, wipe: superblock, flag: '', number: 2, preserve: false, grub_device: false, type: partition, id: partition-1 }
+    - { fstype: ${vm_fs_type}, volume: partition-1, preserve: false, type: format, id: format-1 }
+    # Partition for LVM, VG
+    - { device: disk-vda, size: -1, wipe: superblock, flag: '', number: 3, preserve: false, grub_device: false, type: partition, id: partition-2 }
+    - { name: sys, devices: [ partition-2 ], preserve: false, type: lvm_volgroup, id: lvm_volgroup-0 }
+    # LV for root
+    - { name: root, volgroup: lvm_volgroup-0, size: ${vm_part_root_size}, wipe: superblock, preserve: false, type: lvm_partition, id: lvm_partition-0 }
+    - { fstype: ${vm_fs_type}, volume: lvm_partition-0, preserve: false, type: format, id: format-2 }
+    # LV for tmp
+    - { name: tmp, volgroup: lvm_volgroup-0, size: ${vm_part_tmp_size}, wipe: superblock, preserve: false, type: lvm_partition, id: lvm_partition-1 }
+    - { fstype: ${vm_fs_type}, volume: lvm_partition-1, preserve: false, type: format, id: format-3 }
+    # LV for var
+    - { name: var, volgroup: lvm_volgroup-0, size: ${vm_part_var_size}, wipe: superblock, preserve: false, type: lvm_partition, id: lvm_partition-2 }
+    - { fstype: ${vm_fs_type}, volume: lvm_partition-2, preserve: false, type: format, id: format-4 }
+    # LV for log
+    - { name: log, volgroup: lvm_volgroup-0, size: ${vm_part_log_size}, wipe: superblock, preserve: false, type: lvm_partition, id: lvm_partition-3 }
+    - { fstype: ${vm_fs_type}, volume: lvm_partition-3, preserve: false, type: format, id: format-5 }
+    # LV for usr
+    - { name: usr, volgroup: lvm_volgroup-0, size: ${vm_part_usr_size}, wipe: superblock, preserve: false, type: lvm_partition, id: lvm_partition-4 }
+    - { fstype: ${vm_fs_type}, volume: lvm_partition-4, preserve: false, type: format, id: format-6 }
+    # Mount points
+    - { path: /usr, device: format-6, type: mount, id: mount-6 }
+    - { path: /var/log, device: format-5, type: mount, id: mount-5 }
+    - { path: /var, device: format-4, type: mount, id: mount-4 }
+    - { path: /tmp, device: format-3, type: mount, id: mount-3 }
+    - { path: /, device: format-2, type: mount, id: mount-2 }
+    - { path: /boot, device: format-1, type: mount, id: mount-1 }
+    - { path: /boot/efi, device: format-0, type: mount, id: mount-0 }
+    # Swapfile on root volume
+    swap:
+      swap: 0
   packages:
     - openssh-server
     - qemu-guest-agent
     - cloud-init
-  storage:
-    #layout:
-    #  name: direct
-    swap:
-      size: 0
-    config:
-      # Partition table
-      - id: vda
-        type: disk
-        ptable: gpt
-        path: /dev/vda
-        wipe: superblock
-        grub_device: true
-      # Boot part
-      ## Create
-      - id: vda1
-        type: partition
-        size: 1024M
-        device: vda
-        flag: boot
-        wipe: superblock
-        number: 1
-      ## Format
-      - id: vda1-boot
-        type: format
-        fstype: ${vm_fstype}
-        label: BOOT
-        volume: vda1
-      ## Mount
-      - id: vda1-mount
-        type: mount
-        path: /boot
-        device: vda1-boot
-      # LVM part
-      ## Create partition
-      - id: vda2
-        type: partition
-        size: -1
-        device: vda
-        wipe: superblock
-        number: 2
-      ## Create VG
-      - id: sys
-        name: sys
-        devices:
-          - vda2
-        type: lvm_volgroup
-      - id: sys
-        name: sys
-        devices:
-          - vda2
-        type: lvm_volgroup
-      # Root partition
-      ## Create
-      - id: sys-root
-        name: root
-        volgroup: sys
-        size: 2048M
-        wipe: superblock
-        type: lvm_partition
-      ## Format
-      - id: format-root
-        type: format
-        volume: sys-root
-        fstype: ${vm_fstype}
-        label: ROOT
-      ## Mount
-      - id: mount-root
-        type: mount
-        device: format-root
-        path: /
-      # Tmp partition
-      ## Create
-      - id: sys-tmp
-        name: tmp
-        volgroup: sys
-        size: 1024M
-        wipe: superblock
-        type: lvm_partition
-      ## Format
-      - id: format-tmp
-        type: format
-        volume: sys-tmp
-        fstype: ${vm_fstype}
-        label: TMP
-      ## Mount
-      - id: mount-tmp
-        type: mount
-        device: format-tmp
-        path: /tmp
-      # Var partition
-      ## Create
-      - id: sys-var
-        name: var
-        volgroup: sys
-        size: 3072M
-        wipe: superblock
-        type: lvm_partition
-      ## Format
-      - id: format-var
-        type: format
-        volume: sys-var
-        fstype: ${vm_fstype}
-        label: VAR
-      ## Mount
-      - id: mount-var
-        type: mount
-        device: format-var
-        path: /var
-      # Log partition
-      ## Create
-      - id: sys-log
-        name: log
-        volgroup: sys
-        size: 3072M
-        wipe: superblock
-        type: lvm_partition
-      ## Format
-      - id: format-log
-        type: format
-        volume: sys-log
-        fstype: ${vm_fstype}
-        label: LOG
-      ## Mount
-      - id: mount-log
-        type: mount
-        device: format-log
-        path: /log
-      # Usr partition
-      ## Create
-      - id: sys-usr
-        name: usr
-        volgroup: sys
-        size: 6144M
-        wipe: superblock
-        type: lvm_partition
-      ## Format
-      - id: format-usr
-        type: format
-        volume: sys-usr
-        fstype: ${vm_fstype}
-        label: USR
-      ## Mount
-      - id: mount-usr
-        type: mount
-        device: format-usr
-        path: /usr
+  ssh:
+    install-server: true
+    allow-pw: true
   user-data:
     package_upgrade: true
     timezone: ${vm_timezone}
     users:
-      - name: ${build_username}
-        passwd: ${build_password_encrypted}
+      - name: ${vm_username}
+        passwd: ${vm_password_encrypted}
         groups: [adm, cdrom, dip, plugdev, lxd, sudo]
         lock-passwd: false
         sudo: ALL=(ALL) NOPASSWD:ALL
         shell: /bin/bash
         ssh_authorized_keys:
-          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKvqsyyx7uFjUHyuUvLDGo85Q5yeIhbzr9BXJ8UKgUvUwBLDsv39AswAC79+4jvMiBNzHD3N1knTouYFMn9qGOrqUqvuZsbbIoyYd0SOA2yWv+8tUcNR/LonO6RROsvH1h9h/Njc3878hrEub5wE2SqMu2FCe9cT7IzuacaSM8fvKVVluRFXUH2VFf/8uNZ8VYSi3uwYnibpZ2LdERv9DMz22m28JAeuVz/0WV9B0YZ4Iy1idiodyMGtwKfKxysop7uff73M08LsBn07bpHZ2UITc/OvFw+0m8xJSIBFqvRClffSpNXYBpXEkTWSGqcrRZDY3GRALr4AyzkCwmuR1z ansible
+          - ${vm_pubkey}
+  late-commands:
+  - curtin in-target --target=/target -- sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=""/GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"/' /etc/default/grub
+  - curtin in-target --target=/target -- apt-get install -y vim net-tools htop ifplugd iftop iperf3 less man-db mlocate ncdu ntp openssh-server rsync nfs-common strace git nmap
