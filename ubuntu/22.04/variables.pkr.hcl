@@ -22,6 +22,7 @@ variable "proxmox_insecure" {
 
 variable "proxmox_vm_id" {
   type = string
+  default = 0
 }
 
 variable "proxmox_datastore" {
@@ -51,22 +52,27 @@ variable "iso_file" {
 }
 
 variable "build_username" {
-  type = string
+  type    = string
+  sensitive = true
+  default = "packer"
 }
 
 variable "build_password" {
   type      = string
   sensitive = true
+  default   = "packer"
 }
 
 variable "build_password_encrypted" {
   type      = string
   sensitive = true
+  default   = "$5$xwGN5Dp4pJTfUs/4$yxIOrbw/loX7UXVm79VHUi6am150kPaYfEyiTtWLcg7"
 }
 
 // VM vars
 variable "vm_keyboard" {
-  type = string
+  type    = string
+  default = "us"
 }
 
 variable "vm_hostname" {
@@ -74,11 +80,13 @@ variable "vm_hostname" {
 }
 
 variable "vm_fstype" {
-  type = string
+  type    = string
+  default = "ext4"
 }
 
 variable "vm_timezone" {
-  type = string
+  type    = string
+  default = "en_US"
 }
 
 variable "vm_memory" {
