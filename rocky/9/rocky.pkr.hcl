@@ -27,11 +27,11 @@ source "proxmox" "rocky_template" {
     })
   }
 
-  insecure_skip_tls_verify = "true"
+  insecure_skip_tls_verify = var.proxmox_insecure
   iso_file                 = "${var.proxmox_datastore}:iso/${var.iso_file}"
   os		               = "l26"
   cpu_type                 = "Nehalem"
-  cores                    = "2"
+  cores                    = 2
   memory                   = var.vm_memory
   network_adapters {
     model    = var.vm_net_iface_type
