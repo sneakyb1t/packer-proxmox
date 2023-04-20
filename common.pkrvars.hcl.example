@@ -10,7 +10,6 @@ proxmox_storage_pool = ""
 #proxmox_insecure = ""
 
 // VM Vars
-vm_memory =
 #proxmox_vm_id = "0"
 #vm_username= ""
 #vm_password = ""
