@@ -2,10 +2,10 @@ source "proxmox" "rocky_template" {
  boot_command = ["<up><tab> text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/inst.ks<wait><enter><wait>"]
   boot_wait    = "10s"
   disks {
-    disk_size         = "20G"
-    storage_pool      = "drbdstorage"
-    storage_pool_type = "lvm"
-    type              = "virtio"
+    type              = var.vm_disk_type
+    disk_size         = var.vm_disk_size
+    storage_pool      = var.proxmox_storage_pool
+    storage_pool_type = var.proxmox_storage_pool_type
   }
   http_content = {
     "/inst.ks" = templatefile("${abspath(path.root)}/http/inst.ks.hcl", {
