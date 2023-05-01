@@ -52,8 +52,4 @@ source "proxmox" "rocky_template" {
 
 build {
   sources = ["source.proxmox.rocky_template"]
-
-  provisioner "shell" {
-    inline = ["yum install -y cloud-init qemu-guest-agent cloud-utils-growpart gdisk"]
-  }
 }
