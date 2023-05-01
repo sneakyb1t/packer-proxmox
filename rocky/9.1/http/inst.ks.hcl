@@ -95,7 +95,7 @@ skipx
 dnf makecache
 dnf install epel-release -y
 dnf makecache
-dnf install -y sudo open-vm-tools perl
+dnf install -y sudo qemu-guest-agent cloud-init perl
 echo "${vm_username} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/${vm_username}
 sed -i "s/^.*requiretty/#Defaults requiretty/" /etc/sudoers
 %end
