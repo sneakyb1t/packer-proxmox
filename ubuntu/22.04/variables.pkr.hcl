@@ -82,6 +82,11 @@ variable "vm_keyboard" {
   default = "us"
 }
 
+variable "vm_language" {
+  type    = string
+  default = "us"
+}
+
 variable "vm_fs_type" {
   type    = string
   default = "ext4"
