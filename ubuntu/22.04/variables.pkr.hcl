@@ -157,5 +157,5 @@ variable "vm_part_log_size" {
 
 variable "vm_part_usr_size" {
   type    = string
-  default = "0"
+  default = "-1"
 }
