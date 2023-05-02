@@ -1,5 +1,5 @@
 source "proxmox" "rocky_template" {
- boot_command = ["<up><tab> text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/inst.ks<wait><enter><wait>"]
+  boot_command = ["e<down><down><end><bs><bs><bs><bs><bs>inst.text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/inst.ks<leftCtrlOn>x<leftCtrlOff>"]
   boot_wait    = "10s"
   disks {
     type              = var.vm_disk_type

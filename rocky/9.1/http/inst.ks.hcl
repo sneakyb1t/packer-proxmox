@@ -68,6 +68,8 @@ clearpart --all --initlabel
 
 ### Modify partition sizes for the virtual machine hardware.
 ### Create primary system partitions.
+
+part /boot/efi --fstype=efi --size=200 --label=EFI
 part /boot --fstype ${vm_fs_type} --size=${vm_part_boot_size} --label=BOOTFS
 part pv.01 --size=100 --grow
 
