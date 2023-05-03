@@ -82,6 +82,11 @@ variable "vm_keyboard" {
   default = "us"
 }
 
+variable "vm_language" {
+  type    = string
+  default = "us"
+}
+
 variable "vm_fs_type" {
   type    = string
   default = "ext4"
@@ -121,50 +126,36 @@ variable "vm_net_firewall" {
 }
 
 // Partitioning
+variable "vm_part_efi_size" {
+  type    = string
+  default = "100M"
+}
+
 variable "vm_part_boot_size" {
   type    = string
-  default = "1024"
+  default = "824M"
 }
 
 variable "vm_part_root_size" {
   type    = string
-  default = "2048"
+  default = "2G"
 }
 variable "vm_part_tmp_size" {
   type    = string
-  default = "1024"
+  default = "1G"
 }
 
 variable "vm_part_var_size" {
   type    = string
-  default = "3072"
+  default = "3G"
 }
 
 variable "vm_part_log_size" {
   type    = string
-  default = "2048"
+  default = "2G"
 }
 
 variable "vm_part_usr_size" {
   type    = string
-  default = "3072"
-}
-
-variable "vm_cpu_type" {
-  type    = string
-  default = "host"
-}
-
-variable "vm_cores" {
-  type    = string
-  default = "2"
-}
-
-variable "vm_os" {
-  type    = string
-  default = "l26"
-}
-variable "timeout" {
-  type    = string
-  default = "30m"
+  default = "-1"
 }
