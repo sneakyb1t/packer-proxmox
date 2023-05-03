@@ -138,21 +138,21 @@ variable "vm_part_boot_size" {
 
 variable "vm_part_root_size" {
   type    = string
-  default = "2048M"
+  default = "2G"
 }
 variable "vm_part_tmp_size" {
   type    = string
-  default = "1024M"
+  default = "1G"
 }
 
 variable "vm_part_var_size" {
   type    = string
-  default = "3072M"
+  default = "3G"
 }
 
 variable "vm_part_log_size" {
   type    = string
-  default = "2048M"
+  default = "2G"
 }
 
 variable "vm_part_usr_size" {
