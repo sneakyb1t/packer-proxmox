@@ -23,3 +23,7 @@ vm_pubkey = ""
 #vm_net_iface_type = "virtio"
 #vm_net_bridge_name = "vmbr0"
 #vm_net_firewall = true
+#vm_disk_size    = "30G"
+#vm_os           = "l26"
+#vm_cpu_type = "host"
+#vm_cores    = "2"
