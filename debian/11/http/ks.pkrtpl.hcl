@@ -37,17 +37,17 @@ d-i partman-auto/expert_recipe string                     \
     filesystem{ vfat }                                    \
     label { EFIFS }                                       \
     .                                                     \
-    ${vm_part_boot_size} ${vm_part_boot_size} ${vm_part_boot_size} xfs                                    \
+    ${vm_part_boot_size} ${vm_part_boot_size} ${vm_part_boot_size} ext4                                    \
     $bootable{ }                                          \
     $primary{ }                                           \
     mountpoint{ /boot }                                   \
     method{ format }                                      \
     format{ }                                             \
     use_filesystem{ }                                     \
-    filesystem{ xfs }                                     \
+    filesystem{ ext4 }                                     \
     label { BOOTFS }                                      \
     .                                                     \
-    ${vm_part_root_size} ${vm_part_root_size} ${vm_part_root_size} xfs                                      \
+    ${vm_part_root_size} ${vm_part_root_size} ${vm_part_root_size} ext4                                      \
     $lvmok{ }                                             \
     mountpoint{ / }                                       \
     lv_name{ root }                                    \
@@ -55,10 +55,10 @@ d-i partman-auto/expert_recipe string                     \
     method{ format }                                      \
     format{ }                                             \
     use_filesystem{ }                                     \
-    filesystem{ xfs }                                     \
+    filesystem{ ext4 }                                     \
     label { ROOTFS }                                      \
     .                                                     \
-    ${vm_part_tmp_size} ${vm_part_tmp_size} ${vm_part_tmp_size} xfs                                    \
+    ${vm_part_tmp_size} ${vm_part_tmp_size} ${vm_part_tmp_size} ext4                                    \
     $lvmok{ }                                             \
     mountpoint{ /tmp }                                    \
     lv_name{ tmp }                                     \
@@ -66,13 +66,13 @@ d-i partman-auto/expert_recipe string                     \
     method{ format }                                      \
     format{ }                                             \
     use_filesystem{ }                                     \
-    filesystem{ xfs }                                     \
+    filesystem{ ext4 }                                     \
     label { TMPFS }                                       \
     options/nodev{ nodev }                                \
     options/noexec{ noexec }                              \
     options/nosuid{ nosuid }                              \
     .                                                     \
-    ${vm_part_var_size} ${vm_part_var_size} ${vm_part_var_size} xfs                                    \
+    ${vm_part_var_size} ${vm_part_var_size} ${vm_part_var_size} ext4                                    \
     $lvmok{ }                                             \
     mountpoint{ /var }                                    \
     lv_name{ var }                                     \
@@ -80,11 +80,11 @@ d-i partman-auto/expert_recipe string                     \
     method{ format }                                      \
     format{ }                                             \
     use_filesystem{ }                                     \
-    filesystem{ xfs }                                     \
+    filesystem{ ext4 }                                     \
     label { VARFS }                                       \
     options/nodev{ nodev }                                \
     .                                                     \
-    ${vm_part_log_size} ${vm_part_log_size} ${vm_part_log_size} xfs                                    \
+    ${vm_part_log_size} ${vm_part_log_size} ${vm_part_log_size} ext4                                    \
     $lvmok{ }                                             \
     mountpoint{ /var/log }                                \
     lv_name{ log }                                     \
@@ -92,13 +92,13 @@ d-i partman-auto/expert_recipe string                     \
     method{ format }                                      \
     format{ }                                             \
     use_filesystem{ }                                     \
-    filesystem{ xfs }                                     \
+    filesystem{ ext4 }                                     \
     label { LOGFS }                                       \
     options/nodev{ nodev }                                \
     options/noexec{ noexec }                              \
     options/nosuid{ nosuid }                              \
     .                                                     \
-    ${vm_part_usr_size} ${vm_part_usr_size} ${vm_part_usr_size} xfs                                    \
+    ${vm_part_usr_size} ${vm_part_usr_size} ${vm_part_usr_size} ext4                                    \
     $lvmok{ }                                             \
     mountpoint{ /usr }                                \
     lv_name{ usr }                                     \
@@ -106,7 +106,7 @@ d-i partman-auto/expert_recipe string                     \
     method{ format }                                      \
     format{ }                                             \
     use_filesystem{ }                                     \
-    filesystem{ xfs }                                     \
+    filesystem{ ext4 }                                     \
     label { LOGFS }                                       \
     options/nodev{ nodev }                                \
     options/noexec{ noexec }                              \
