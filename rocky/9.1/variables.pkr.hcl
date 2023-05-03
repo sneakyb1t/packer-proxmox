@@ -149,3 +149,22 @@ variable "vm_part_usr_size" {
   type    = string
   default = "3072"
 }
+
+variable "vm_cpu_type" {
+  type    = string
+  default = "host"
+}
+
+variable "vm_cores" {
+  type    = string
+  default = "2"
+}
+
+variable "vm_os" {
+  type    = string
+  default = "l26"
+}
+variable "timeout" {
+  type    = string
+  default = "30m"
+}

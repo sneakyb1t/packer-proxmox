@@ -7,9 +7,14 @@ source "proxmox" "rocky_template" {
     storage_pool      = var.proxmox_storage_pool
     storage_pool_type = var.proxmox_storage_pool_type
   }
+  efi_config {
+  efi_storage_pool         = "local"
+  pre_enrolled_keys        = true
+  efi_type                 = "4m"
+  }
   http_content = {
     "/inst.ks" = templatefile("${abspath(path.root)}/http/inst.ks.hcl", {
-      vm_username			   = var.vm_username
+      vm_username	       = var.vm_username
       vm_password              = var.vm_password
       vm_password_encrypted    = var.vm_password_encrypted
       vm_pubkey                = var.vm_pubkey
@@ -29,9 +34,9 @@ source "proxmox" "rocky_template" {
 
   insecure_skip_tls_verify = var.proxmox_insecure
   iso_file                 = "${var.proxmox_datastore}:iso/${var.iso_file}"
-  os		               = "l26"
-  cpu_type                 = "Nehalem"
-  cores                    = 2
+  os		           = var.vm_os
+  cpu_type                 = var.vm_cpu_type
+  cores                    = var.vm_cores
   memory                   = var.vm_memory
   network_adapters {
     model    = var.vm_net_iface_type
@@ -42,12 +47,13 @@ source "proxmox" "rocky_template" {
   password      = var.proxmox_password
   proxmox_url   = var.proxmox_url
   ssh_password  = var.vm_password
-  ssh_timeout   = "30m"
+  ssh_timeout   = var.timeout 
   ssh_username  = var.vm_username
   template_name = var.proxmox_template_name
   unmount_iso   = true
   username      = var.proxmox_username
   vm_id         = var.proxmox_vm_id
+  bios          = "ovmf"
 }
 
 build {
