@@ -1,5 +1,4 @@
 iso_file              = "ubuntu-22.04.2-live-server-amd64.iso"
 proxmox_template_name = "ubuntu-22.04"
 vm_hostname           = "ubuntu2204"
-vm_disk_size          = "15360M"
-vm_memory             = 2048
+vm_memory             = "2G"

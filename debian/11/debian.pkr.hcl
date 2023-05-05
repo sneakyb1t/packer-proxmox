@@ -32,8 +32,10 @@ source "proxmox" "debian11" {
   scsi_controller          = var.proxmox_scsi_controller
   insecure_skip_tls_verify = var.proxmox_insecure
   iso_file                 = "${var.proxmox_datastore}:iso/${var.iso_file}"
-  cores                    = 4
-  sockets                  = 1
+  os		           = var.vm_os
+  cpu_type                 = var.vm_cpu_type
+  cores                    = var.vm_cores
+  sockets                  = var.vm_sockets
   memory                   = var.vm_memory
   network_adapters {
     model    = var.vm_net_iface_type

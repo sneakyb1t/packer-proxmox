@@ -49,6 +49,9 @@ autoinstall:
     - openssh-server
     - qemu-guest-agent
     - cloud-init
+    - gdisk
+    - cloud-utils
+
   ssh:
     install-server: true
     allow-pw: true
