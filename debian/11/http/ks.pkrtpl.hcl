@@ -137,7 +137,7 @@ d-i passwd/user-password-crypted password ${vm_password_encrypted}
 
 # Package Configuration
 d-i pkgsel/run_tasksel boolean false
-d-i pkgsel/include string openssh-server open-vm-tools python3-apt perl
+d-i pkgsel/include string openssh-server  gdisk qemu-guest-agent cloud-utils cloud-init
 
 # Add User to Sudoers
 d-i preseed/late_command string \
