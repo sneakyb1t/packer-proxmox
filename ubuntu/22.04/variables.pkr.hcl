@@ -98,11 +98,13 @@ variable "vm_timezone" {
 }
 
 variable "vm_memory" {
-  type = number
+  type = string
+  default = "2G"
 }
 
 variable "vm_disk_size" {
   type = string
+  default = "30G"
 }
 
 variable "vm_disk_type" {
@@ -158,4 +160,29 @@ variable "vm_part_log_size" {
 variable "vm_part_usr_size" {
   type    = string
   default = "-1"
+}
+
+variable "vm_sockets" {
+  type    = string
+  default = "1"
+}
+
+variable "vm_cores" {
+  type    = string
+  default = "1"
+}
+
+variable "vm_cpu_type" {
+  type    = string
+  default = "host"
+}
+
+variable "vm_os" {
+  type    = string
+  default = "l26"
+}
+
+variable "timeout" {
+  type    = string
+  default = "30m"
 }
