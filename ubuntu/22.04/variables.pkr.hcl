@@ -98,8 +98,8 @@ variable "vm_timezone" {
 }
 
 variable "vm_memory" {
-  type = string
-  default = "2G"
+  type = number
+  default = 2048
 }
 
 variable "vm_disk_size" {
