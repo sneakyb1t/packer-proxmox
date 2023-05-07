@@ -98,8 +98,8 @@ variable "vm_timezone" {
 }
 
 variable "vm_memory" {
-  type = number
-  default = 2048
+  type = string
+  default = "2G"
 }
 
 variable "vm_disk_size" {
@@ -131,29 +131,30 @@ variable "vm_net_firewall" {
 variable "vm_part_efi_size" {
   type    = string
   default = "100M"
+}
 
 variable "vm_part_boot_size" {
   type    = string
-  default = "1024"
+  default = "824M"
 }
 
 variable "vm_part_root_size" {
   type    = string
-  default = "2048"
+  default = "2G"
 }
 variable "vm_part_tmp_size" {
   type    = string
-  default = "1024"
+  default = "1G"
 }
 
 variable "vm_part_var_size" {
   type    = string
-  default = "3072"
+  default = "3G"
 }
 
 variable "vm_part_log_size" {
   type    = string
-  default = "2048"
+  default = "2G"
 }
 
 variable "vm_part_usr_size" {
@@ -165,8 +166,6 @@ variable "vm_sockets" {
   type    = string
   default = "1"
 }
-
-
 
 variable "vm_cores" {
   type    = string
@@ -182,6 +181,7 @@ variable "vm_os" {
   type    = string
   default = "l26"
 }
+
 variable "timeout" {
   type    = string
   default = "30m"

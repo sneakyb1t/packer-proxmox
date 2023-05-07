@@ -9,7 +9,7 @@ source "proxmox" "rocky9" {
 
   }
   efi_config {
-  efi_storage_pool         = "var.proxmox_storage_pool"
+  efi_storage_pool         = var.proxmox_storage_pool
   pre_enrolled_keys        = true
   efi_type                 = "4m"
   }
@@ -66,6 +66,6 @@ build {
   sources = ["source.proxmox.rocky9"]
 
   provisioner "shell" {
-    inline = ["while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done", "sudo apt-get update", "sudo apt-get upgrade -y"]
+    inline = ["sudo yum update", "sudo yum upgrade -y"]
   }
 }

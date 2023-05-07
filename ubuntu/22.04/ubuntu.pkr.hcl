@@ -12,7 +12,7 @@ source "proxmox" "ubuntu22" {
 
   }
   efi_config {
-  efi_storage_pool         = "var.proxmox_storage_pool"
+  efi_storage_pool         = var.proxmox_storage_pool
   pre_enrolled_keys        = true
   efi_type                 = "4m"
   }

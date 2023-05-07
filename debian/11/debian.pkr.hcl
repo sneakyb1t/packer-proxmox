@@ -26,9 +26,9 @@ source "proxmox" "debian11" {
 
   }
   efi_config {
-    efi_storage_pool         = var.proxmox_storage_pool
-    pre_enrolled_keys        = true
-    efi_type                 = "4m"
+  efi_storage_pool         = var.proxmox_storage_pool
+  pre_enrolled_keys        = true
+  efi_type                 = "4m"
   }
 
   scsi_controller          = var.proxmox_scsi_controller
@@ -49,7 +49,7 @@ source "proxmox" "debian11" {
   password      = var.proxmox_password
   proxmox_url   = var.proxmox_url
   ssh_password  = var.vm_password
-  ssh_timeout   = "30m"
+  ssh_timeout   = var.timeout
   ssh_username  = var.vm_username
   template_name = var.proxmox_template_name
   unmount_iso   = true
@@ -59,7 +59,7 @@ source "proxmox" "debian11" {
 
   http_content = {
     "/ks.cfg" = templatefile("${abspath(path.root)}/http/ks.pkrtpl.hcl", {
-      vm_username			   = var.vm_username
+      vm_username	       = var.vm_username
       vm_password              = var.vm_password
       vm_password_encrypted    = var.vm_password_encrypted
       vm_pubkey                = var.vm_pubkey
@@ -83,6 +83,6 @@ build {
   sources = ["source.proxmox.debian11"]
 
   provisioner "shell" {
-    inline = ["while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done"]
+    inline = ["sudo apt-get update", "sudo apt-get upgrade -y"]
   }
 }
