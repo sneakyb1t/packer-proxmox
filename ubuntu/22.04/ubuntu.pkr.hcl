@@ -1,5 +1,4 @@
-source "proxmox" "ubuntu22" {
-  http_interface = "tun4"
+source "proxmox-iso" "ubuntu22" {
   boot_command = ["c",
     "<wait><wait><wait>linux /casper/vmlinuz --- autoinstall ds='nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/'",
     "<enter><wait>",
@@ -63,12 +62,13 @@ source "proxmox" "ubuntu22" {
       vm_part_var_size         = var.vm_part_var_size
       vm_part_log_size         = var.vm_part_log_size
       vm_part_usr_size         = var.vm_part_usr_size
+      vm_swap_size             = var.vm_swap_size
     })
   }
 }
 
 build {
-  sources = ["source.proxmox.ubuntu22"]
+  sources = ["source.proxmox-iso.ubuntu22"]
 
   provisioner "shell" {
     inline = ["while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done", "sudo apt-get update", "sudo apt-get upgrade -y"]

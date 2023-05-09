@@ -44,7 +44,7 @@ autoinstall:
     - { path: /boot/efi, device: format-0, type: mount, id: mount-0 }
     # Swapfile on root volume
     swap:
-      swap: ${vm_swap}
+      swap: ${vm_swap_size}
   packages:
     - openssh-server
     - qemu-guest-agent
@@ -69,4 +69,4 @@ autoinstall:
           - ${vm_pubkey}
   late-commands:
   - curtin in-target --target=/target -- sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=""/GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"/' /etc/default/grub
-  - curtin in-target --target=/target -- apt-get install -y vim net-tools htop ifplugd iftop iperf3 less man-db mlocate ncdu ntp openssh-server rsync nfs-common strace git nmap
+  - curtin in-target --target=/target -- apt-get update -y && apt-get upgrade -y

@@ -187,7 +187,7 @@ variable "timeout" {
   default = "30m"
 }
 
-variable "vm_swap" {
+variable "vm_swap_size" {
   type    = string
   default = "2G"
 }
