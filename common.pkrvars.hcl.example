@@ -7,7 +7,7 @@ proxmox_datastore = ""
 proxmox_storage_pool = ""
 #proxmox_storage_pool_type = "lvm"
 #proxmox_scsi_controller = "virtio-scsi-pci"
-#proxmox_insecure = ""
+#proxmox_insecure = "true"
 
 // VM Vars
 #proxmox_vm_id = "0"

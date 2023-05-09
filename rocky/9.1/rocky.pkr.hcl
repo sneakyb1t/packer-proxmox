@@ -1,4 +1,4 @@
-source "proxmox" "rocky9" {
+source "proxmox-iso" "rocky9" {
   boot_command = ["e<down><down><end><bs><bs><bs><bs><bs>inst.text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/inst.ks<leftCtrlOn>x<leftCtrlOff>"]
   boot_wait    = "10s"
   disks {

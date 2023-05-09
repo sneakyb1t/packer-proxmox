@@ -1,4 +1,4 @@
-source "proxmox" "debian11" {
+source "proxmox-iso" "debian11" {
   boot_command = [
     "<wait3s>c<wait3s>",
     "linux /install.amd/vmlinuz",
