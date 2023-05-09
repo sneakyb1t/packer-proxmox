@@ -186,3 +186,8 @@ variable "timeout" {
   type    = string
   default = "30m"
 }
+
+variable "vm_swap" {
+  type    = string
+  default = "2G"
+}

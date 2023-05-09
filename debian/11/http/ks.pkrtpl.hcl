@@ -112,6 +112,8 @@ d-i partman-auto/expert_recipe string                     \
     options/noexec{ noexec }                              \
     options/nosuid{ nosuid }                              \
     .                                                     \
+    part swap --size ${vm_swap_size} --fstype swap
+    .
 
 d-i partman-partitioning/confirm_write_new_label boolean true
 d-i partman/choose_partition select finish
