@@ -44,7 +44,7 @@ autoinstall:
     - { path: /boot/efi, device: format-0, type: mount, id: mount-0 }
     # Swapfile on root volume
     swap:
-      swap: 0
+      swap: ${vm_swap}
   packages:
     - openssh-server
     - qemu-guest-agent

@@ -135,21 +135,21 @@ variable "vm_part_efi_size" {
 
 variable "vm_part_boot_size" {
   type    = string
-  default = "824"
+  default = "4096"
 }
 
 variable "vm_part_root_size" {
   type    = string
-  default = "2048"
+  default = "4096"
 }
 variable "vm_part_tmp_size" {
   type    = string
-  default = "1024"
+  default = "2048"
 }
 
 variable "vm_part_var_size" {
   type    = string
-  default = "3076"
+  default = "6152"
 }
 
 variable "vm_part_log_size" {
@@ -159,7 +159,7 @@ variable "vm_part_log_size" {
 
 variable "vm_part_usr_size" {
   type    = string
-  default = "-1"
+  default = "2048"
 }
 
 variable "vm_sockets" {
@@ -186,11 +186,10 @@ variable "timeout" {
   type    = string
   default = "30m"
 }
-
 variable "http_interface" {
   type    = string
 }
 variable "vm_swap_size" {
-  type    = number
-  default = 2048
+  type    = string
+  default = "2048"
 }

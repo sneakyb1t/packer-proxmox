@@ -3,7 +3,7 @@
 # COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 # OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# Rocky Linux 9
+# REHl 8.7
 
 ### Installs from the first attached CD-ROM/DVD on the system.
 cdrom
@@ -83,7 +83,6 @@ logvol / --fstype ${vm_fs_type} --name=root --vgname=sys --size=${vm_part_root_s
 logvol /tmp --fstype ${vm_fs_type} --name=tmp --vgname=sys --size=${vm_part_tmp_size} --label=TMPFS --fsoptions="nodev,noexec,nosuid"
 logvol /var --fstype ${vm_fs_type} --name=var --vgname=sys --size=${vm_part_var_size} --label=VARFS --fsoptions="nodev"
 logvol /var/log --fstype ${vm_fs_type} --name=log --vgname=sys --size=${vm_part_log_size} --label=LOGFS --fsoptions="nodev,noexec,nosuid"
-logvol /usr --fstype ${vm_fs_type} --name=usr --vgname=sys --size=${vm_part_usr_size} --label=USRFS --fsoptions="nodev"
 ### Modifies the default set of services that will run under the default runlevel.
 services --enabled=NetworkManager,sshd
 ### Do not configure X on the installed system.
