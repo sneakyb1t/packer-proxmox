@@ -2,12 +2,17 @@ Packer for Proxmox
 ===================
 
 This repository provides an easy way to create templates in Proxmox using Packer and the Proxmox plugin.
+You can install packer and provision either from proxmox or any other host that has access to proxmox API
 
 Prerequisites
 =============
 
 - Packer 1.8.6+ installed on your system
 - A Proxmox environment running version 7.X
+
+```
+packer init require.pkr.hcl
+```
 
 Installing Packer
 ============================================

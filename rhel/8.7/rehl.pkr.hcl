@@ -1,4 +1,4 @@
-source "proxmox" "rhel8" {
+source "proxmox-iso" "rhel8" {
   boot_command = ["e<down><down><end><bs><bs><bs><bs><bs>inst.text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/inst.ks<leftCtrlOn>x<leftCtrlOff>"]
   boot_wait    = "10s"
   disks {
@@ -58,6 +58,7 @@ source "proxmox" "rhel8" {
       vm_part_var_size         = var.vm_part_var_size
       vm_part_log_size         = var.vm_part_log_size
       vm_part_usr_size         = var.vm_part_usr_size
+      vm_swap_size             = var.vm_swap_size
     })
   }
 }
