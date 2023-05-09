@@ -64,8 +64,4 @@ source "proxmox" "rocky9" {
 
 build {
   sources = ["source.proxmox.rocky9"]
-
-  provisioner "shell" {
-    inline = ["sudo yum update", "sudo yum upgrade -y"]
-  }
 }
