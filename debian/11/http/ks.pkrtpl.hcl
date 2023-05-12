@@ -37,6 +37,10 @@ d-i partman-auto/expert_recipe string                     \
     filesystem{ vfat }                                    \
     label { EFIFS }                                       \
     .                                                     \
+    ${vm_swap_size} ${vm_swap_size} ${vm_swap_size} linux-swap \
+    method{ swap } \
+    format{ } \
+    .
     ${vm_part_boot_size} ${vm_part_boot_size} ${vm_part_boot_size} ext4                                    \
     $bootable{ }                                          \
     $primary{ }                                           \
@@ -44,29 +48,29 @@ d-i partman-auto/expert_recipe string                     \
     method{ format }                                      \
     format{ }                                             \
     use_filesystem{ }                                     \
-    filesystem{ ext4 }                                     \
+    filesystem{ ext4 }                                    \
     label { BOOTFS }                                      \
     .                                                     \
     ${vm_part_root_size} ${vm_part_root_size} ${vm_part_root_size} ext4                                      \
     $lvmok{ }                                             \
     mountpoint{ / }                                       \
-    lv_name{ root }                                    \
-    in_vg { sys }                                       \
+    lv_name{ root }                                       \
+    in_vg { sys }                                         \
     method{ format }                                      \
     format{ }                                             \
     use_filesystem{ }                                     \
-    filesystem{ ext4 }                                     \
+    filesystem{ ext4 }                                    \
     label { ROOTFS }                                      \
     .                                                     \
     ${vm_part_tmp_size} ${vm_part_tmp_size} ${vm_part_tmp_size} ext4                                    \
     $lvmok{ }                                             \
     mountpoint{ /tmp }                                    \
-    lv_name{ tmp }                                     \
-    in_vg { sys }                                	   \
+    lv_name{ tmp }                                        \
+    in_vg { sys }                                	  \
     method{ format }                                      \
     format{ }                                             \
     use_filesystem{ }                                     \
-    filesystem{ ext4 }                                     \
+    filesystem{ ext4 }                                    \
     label { TMPFS }                                       \
     options/nodev{ nodev }                                \
     options/noexec{ noexec }                              \
@@ -75,24 +79,24 @@ d-i partman-auto/expert_recipe string                     \
     ${vm_part_var_size} ${vm_part_var_size} ${vm_part_var_size} ext4                                    \
     $lvmok{ }                                             \
     mountpoint{ /var }                                    \
-    lv_name{ var }                                     \
-    in_vg { sys }                                	   \
+    lv_name{ var }                                        \
+    in_vg { sys }                                	  \
     method{ format }                                      \
     format{ }                                             \
     use_filesystem{ }                                     \
-    filesystem{ ext4 }                                     \
+    filesystem{ ext4 }                                    \
     label { VARFS }                                       \
     options/nodev{ nodev }                                \
     .                                                     \
     ${vm_part_log_size} ${vm_part_log_size} ${vm_part_log_size} ext4                                    \
     $lvmok{ }                                             \
     mountpoint{ /var/log }                                \
-    lv_name{ log }                                     \
-    in_vg { sys }                                	   \
+    lv_name{ log }                                        \
+    in_vg { sys }                                	  \
     method{ format }                                      \
     format{ }                                             \
     use_filesystem{ }                                     \
-    filesystem{ ext4 }                                     \
+    filesystem{ ext4 }                                    \
     label { LOGFS }                                       \
     options/nodev{ nodev }                                \
     options/noexec{ noexec }                              \
@@ -100,20 +104,19 @@ d-i partman-auto/expert_recipe string                     \
     .                                                     \
     ${vm_part_usr_size} ${vm_part_usr_size} ${vm_part_usr_size} ext4                                    \
     $lvmok{ }                                             \
-    mountpoint{ /usr }                                \
-    lv_name{ usr }                                     \
-    in_vg { sys }                                	   \
+    mountpoint{ /usr }                                    \
+    lv_name{ usr }                                        \
+    in_vg { sys }                                	  \
     method{ format }                                      \
     format{ }                                             \
     use_filesystem{ }                                     \
-    filesystem{ ext4 }                                     \
+    filesystem{ ext4 }                                    \
     label { LOGFS }                                       \
     options/nodev{ nodev }                                \
     options/noexec{ noexec }                              \
     options/nosuid{ nosuid }                              \
     .                                                     \
-    part swap --size ${vm_swap_size} --fstype swap
-    .
+    
 
 d-i partman-partitioning/confirm_write_new_label boolean true
 d-i partman/choose_partition select finish
@@ -139,7 +142,7 @@ d-i passwd/user-password-crypted password ${vm_password_encrypted}
 
 # Package Configuration
 d-i pkgsel/run_tasksel boolean false
-d-i pkgsel/include string openssh-server  gdisk qemu-guest-agent cloud-utils cloud-init
+d-i pkgsel/include string openssh-server qemu-guest-agent gdisk cloud-init
 
 # Add User to Sudoers
 d-i preseed/late_command string \

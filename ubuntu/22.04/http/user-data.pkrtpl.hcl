@@ -8,6 +8,7 @@ autoinstall:
   locale: ${vm_timezone}
   storage:
     config:
+
     # Partition table
     - { ptable: gpt, path: /dev/vda, wipe: superblock, preserve: false, name: '', grub_device: false, type: disk, id: disk-vda }
     # EFI boot partition
@@ -48,9 +49,9 @@ autoinstall:
   packages:
     - openssh-server
     - qemu-guest-agent
-    - cloud-init
     - gdisk
-    - cloud-utils
+  package_update: true
+  package_upgrade: true
 
   ssh:
     install-server: true
