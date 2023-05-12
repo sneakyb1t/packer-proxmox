@@ -1,4 +1,5 @@
-source "proxmox-iso" "rhel8" {
+source "proxmox-iso" "rhel9" {
+http_interface = "utun4"
   boot_command = ["e<down><down><end><bs><bs><bs><bs><bs>inst.text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/inst.ks<leftCtrlOn>x<leftCtrlOff>"]
   boot_wait    = "10s"
   disks {
@@ -64,5 +65,14 @@ source "proxmox-iso" "rhel8" {
 }
 
 build {
-  sources = ["source.proxmox.rhel8"]
+  sources = ["source.proxmox-iso.rhel9"]
+  provisioner "file" {
+    source = "rhel/9.1/openscap.sh"
+    destination = "~/openscap.sh"
+}
+
+  provisioner "shell" {
+    remote_folder = "~"
+    inline = ["sudo bash ~/openscap.sh"]
+  }
 }

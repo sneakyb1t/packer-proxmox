@@ -1,4 +1,5 @@
 source "proxmox-iso" "debian11" {
+  http_interface = "utun3"
   boot_command = [
     "<wait3s>c<wait3s>",
     "linux /install.amd/vmlinuz",
@@ -75,14 +76,19 @@ source "proxmox-iso" "debian11" {
       vm_part_var_size         = var.vm_part_var_size
       vm_part_log_size         = var.vm_part_log_size
       vm_part_usr_size         = var.vm_part_usr_size
+      vm_swap_size             = var.vm_swap_size
     })
   }
 }
 
 build {
-  sources = ["source.proxmox.debian11"]
-
+  sources = ["source.proxmox-iso.debian11"]
+  provisioner "file" {
+    source = "ubuntu/22.04/openscap.sh"
+    destination = "~/openscap.sh"
+}
   provisioner "shell" {
-    inline = ["sudo apt-get update", "sudo apt-get upgrade -y"]
+    remote_folder = "~"
+    inline = ["sudo apt-get update -y", "sudo apt-get upgrade -y", "sudo bash ~/openscap.sh "]
   }
 }

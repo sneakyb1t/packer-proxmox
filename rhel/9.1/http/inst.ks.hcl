@@ -3,7 +3,7 @@
 # COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 # OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# Rocky Linux 9
+# RHEL 9.1
 
 ### Installs from the first attached CD-ROM/DVD on the system.
 cdrom
@@ -71,8 +71,8 @@ clearpart --all --initlabel
 
 part /boot/efi --fstype=efi --size=200 --label=EFI
 part /boot --fstype ${vm_fs_type} --size=${vm_part_boot_size} --label=BOOTFS
-part pv.01 --size=100 --grow
 part swap --size ${vm_swap_size} --fstype swap
+part pv.01 --size=100 --grow
 
 ### Create a logical volume management (LVM) group.
 volgroup sys --pesize=4096 pv.01
@@ -83,7 +83,6 @@ logvol / --fstype ${vm_fs_type} --name=root --vgname=sys --size=${vm_part_root_s
 logvol /tmp --fstype ${vm_fs_type} --name=tmp --vgname=sys --size=${vm_part_tmp_size} --label=TMPFS --fsoptions="nodev,noexec,nosuid"
 logvol /var --fstype ${vm_fs_type} --name=var --vgname=sys --size=${vm_part_var_size} --label=VARFS --fsoptions="nodev"
 logvol /var/log --fstype ${vm_fs_type} --name=log --vgname=sys --size=${vm_part_log_size} --label=LOGFS --fsoptions="nodev,noexec,nosuid"
-logvol /usr --fstype ${vm_fs_type} --name=usr --vgname=sys --size=${vm_part_usr_size} --label=USRFS --fsoptions="nodev"
 ### Modifies the default set of services that will run under the default runlevel.
 services --enabled=NetworkManager,sshd
 ### Do not configure X on the installed system.
@@ -98,7 +97,7 @@ skipx
 dnf makecache
 dnf install epel-release -y
 dnf makecache
-dnf install -y sudo qemu-guest-agent openssh-server cloud-init cloud-utils gdisk
+dnf install -y sudo qemu-guest-agent cloud-init cloud-utils gdisk 
 echo "${vm_username} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/${vm_username}
 sed -i "s/^.*requiretty/#Defaults requiretty/" /etc/sudoers
 yum update -y
