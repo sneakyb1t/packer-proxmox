@@ -1,4 +1,5 @@
 source "proxmox-iso" "rocky9" {
+http_interface = "utun4"
   boot_command = ["e<down><down><end><bs><bs><bs><bs><bs>inst.text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/inst.ks<leftCtrlOn>x<leftCtrlOff>"]
   boot_wait    = "10s"
   disks {
@@ -58,10 +59,20 @@ source "proxmox-iso" "rocky9" {
       vm_part_var_size         = var.vm_part_var_size
       vm_part_log_size         = var.vm_part_log_size
       vm_part_usr_size         = var.vm_part_usr_size
+      vm_swap_size             = var.vm_swap_size
     })
   }
 }
 
 build {
-  sources = ["source.proxmox.rocky9"]
+  sources = ["source.proxmox-iso.rocky9"]
+  provisioner "file" {
+    source = "rocky/9.1/openscap.sh"
+    destination = "~/openscap.sh"
+}
+
+  provisioner "shell" {
+    remote_folder = "~"
+    inline = ["sudo bash ~/openscap.sh"]
+  }
 }

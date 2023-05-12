@@ -1,10 +1,7 @@
-source "proxmox-iso" "ubuntu22" {
-  http_interface = "utun3"
-  boot_command = ["c",
-    "<wait><wait><wait>linux /casper/vmlinuz --- autoinstall ds='nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/'",
-    "<enter><wait>",
-  "<wait><wait><wait>initrd /casper/initrd<enter><wait>", "<wait>boot<enter>"]
-  boot_wait = "10s"
+source "proxmox-iso" "rocky8" {
+http_interface = "utun4"
+  boot_command = ["e<down><down><end><bs><bs><bs><bs><bs>inst.text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/inst.ks<leftCtrlOn>x<leftCtrlOff>"]
+  boot_wait    = "10s"
   disks {
     type              = var.vm_disk_type
     disk_size         = var.vm_disk_size
@@ -45,8 +42,7 @@ source "proxmox-iso" "ubuntu22" {
   bios          = "ovmf"
 
   http_content = {
-    "/meta-data" = file("${abspath(path.root)}/http/meta-data")
-    "/user-data" = templatefile("${abspath(path.root)}/http/user-data.pkrtpl.hcl", {
+    "/inst.ks" = templatefile("${abspath(path.root)}/http/inst.ks.hcl", {
       vm_username              = var.vm_username
       vm_password              = var.vm_password
       vm_password_encrypted    = var.vm_password_encrypted
@@ -69,14 +65,14 @@ source "proxmox-iso" "ubuntu22" {
 }
 
 build {
-  sources = ["source.proxmox-iso.ubuntu22"]
-    
+  sources = ["source.proxmox-iso.rocky8"]
   provisioner "file" {
-    source = "ubuntu/22.04/openscap.sh"
+    source = "rocky/8.7/openscap.sh"
     destination = "~/openscap.sh"
 }
+
   provisioner "shell" {
     remote_folder = "~"
-    inline = ["while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done", "sudo bash ~/openscap.sh"]
-}
+    inline = ["sudo bash ~/openscap.sh"]
+  }
 }
