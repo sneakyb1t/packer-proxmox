@@ -1,5 +1,4 @@
 source "proxmox-iso" "debian11" {
-  http_interface = "utun3"
   boot_command = [
     "<wait3s>c<wait3s>",
     "linux /install.amd/vmlinuz",
@@ -84,7 +83,7 @@ source "proxmox-iso" "debian11" {
 build {
   sources = ["source.proxmox-iso.debian11"]
   provisioner "file" {
-    source = "ubuntu/22.04/openscap.sh"
+    source = "debian/11/openscap.sh"
     destination = "~/openscap.sh"
 }
   provisioner "shell" {

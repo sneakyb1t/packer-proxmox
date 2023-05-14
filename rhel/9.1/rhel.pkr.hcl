@@ -1,5 +1,4 @@
 source "proxmox-iso" "rhel9" {
-http_interface = "utun4"
   boot_command = ["e<down><down><end><bs><bs><bs><bs><bs>inst.text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/inst.ks<leftCtrlOn>x<leftCtrlOff>"]
   boot_wait    = "10s"
   disks {
