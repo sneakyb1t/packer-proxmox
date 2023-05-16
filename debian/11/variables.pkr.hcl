@@ -140,26 +140,26 @@ variable "vm_part_boot_size" {
 
 variable "vm_part_root_size" {
   type    = string
-  default = "2G"
+  default = "2048M"
 }
 variable "vm_part_tmp_size" {
   type    = string
-  default = "1G"
+  default = "1024M"
 }
 
 variable "vm_part_var_size" {
   type    = string
-  default = "3G"
+  default = "2048M"
 }
 
 variable "vm_part_log_size" {
   type    = string
-  default = "2G"
+  default = "2048M"
 }
 
 variable "vm_part_usr_size" {
   type    = string
-  default = "-1"
+  default = "1024M"
 }
 
 variable "vm_sockets" {
@@ -189,5 +189,5 @@ variable "timeout" {
 
 variable "vm_swap_size" {
   type    = string
-  default = "2G"
+  default = "2048"
 }
