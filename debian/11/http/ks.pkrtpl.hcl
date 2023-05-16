@@ -111,7 +111,7 @@ d-i partman-auto/expert_recipe string                     \
     format{ }                                             \
     use_filesystem{ }                                     \
     filesystem{ ext4 }                                    \
-    label { LOGFS }                                       \
+    label { USRFS }                                       \
     options/nodev{ nodev }                                \
     options/noexec{ noexec }                              \
     options/nosuid{ nosuid }                              \
