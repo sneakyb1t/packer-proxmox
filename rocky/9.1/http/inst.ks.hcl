@@ -71,8 +71,8 @@ clearpart --all --initlabel
 
 part /boot/efi --fstype=efi --size=200 --label=EFI
 part /boot --fstype ${vm_fs_type} --size=${vm_part_boot_size} --label=BOOTFS
-part pv.01 --size=100 --grow
 part swap --size ${vm_swap_size} --fstype swap
+part pv.01 --size=100 --grow
 
 ### Create a logical volume management (LVM) group.
 volgroup sys --pesize=4096 pv.01
@@ -98,10 +98,10 @@ skipx
 dnf makecache
 dnf install epel-release -y
 dnf makecache
-dnf install -y sudo qemu-guest-agent openssh-server cloud-init cloud-utils gdisk
+dnf install -y sudo qemu-guest-agent cloud-init gdisk 
 echo "${vm_username} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/${vm_username}
 sed -i "s/^.*requiretty/#Defaults requiretty/" /etc/sudoers
-yum update -y
+dnf update -y
 %end
 
 ### Reboot after the installation is complete.
