@@ -66,7 +66,7 @@ source "proxmox-iso" "rhel9" {
 build {
   sources = ["source.proxmox-iso.rhel9"]
   provisioner "file" {
-    source = "rhel/9.1/openscap.sh"
+    source = "rhel/9.2/openscap.sh"
     destination = "~/openscap.sh"
 }
 
