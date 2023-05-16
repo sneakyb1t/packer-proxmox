@@ -98,10 +98,10 @@ skipx
 dnf makecache
 dnf install epel-release -y
 dnf makecache
-dnf install -y sudo qemu-guest-agent openssh-server cloud-init cloud-utils gdisk
+dnf install -y sudo qemu-guest-agent openssh-server cloud-init gdisk
 echo "${vm_username} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/${vm_username}
 sed -i "s/^.*requiretty/#Defaults requiretty/" /etc/sudoers
-yum update -y
+dnf update -y
 %end
 
 ### Reboot after the installation is complete.
