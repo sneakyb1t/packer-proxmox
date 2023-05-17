@@ -21,7 +21,7 @@ variable "proxmox_insecure" {
 }
 
 variable "proxmox_vm_id" {
-  type = string
+  type    = string
   default = 0
 }
 
@@ -52,9 +52,9 @@ variable "iso_file" {
 }
 
 variable "vm_username" {
-  type    = string
+  type      = string
   sensitive = true
-  default = "packer"
+  default   = "packer"
 }
 
 variable "vm_password" {
@@ -70,11 +70,12 @@ variable "vm_password_encrypted" {
 }
 
 variable "vm_pubkey" {
-  type    = string
+  type = string
 }
 
 variable "vm_hostname" {
   type = string
+  default = "debian11"
 }
 
 variable "vm_keyboard" {
@@ -98,13 +99,13 @@ variable "vm_timezone" {
 }
 
 variable "vm_memory" {
-  type = number
+  type    = number
   default = 2048
 }
 
 variable "vm_disk_size" {
-  type = string
-  default = "30G"
+  type    = string
+  default = "15360M"
 }
 
 variable "vm_disk_type" {
@@ -129,37 +130,43 @@ variable "vm_net_firewall" {
 
 // Partitioning
 variable "vm_part_efi_size" {
-  type    = string
-  default = "100M"
+  type    = number
+  default = 100
 }
 
 variable "vm_part_boot_size" {
-  type    = string
-  default = "824M"
+  type    = number
+  default = 824
 }
 
 variable "vm_part_root_size" {
-  type    = string
-  default = "2048M"
+  type    = number
+  default = 2048
 }
+
 variable "vm_part_tmp_size" {
-  type    = string
-  default = "1024M"
+  type    = number
+  default = 1024
 }
 
 variable "vm_part_var_size" {
-  type    = string
-  default = "2048M"
+  type    = number
+  default = 2048
 }
 
 variable "vm_part_log_size" {
-  type    = string
-  default = "2048M"
+  type    = number
+  default = 2048
+}
+
+variable "vm_part_swap_size" {
+  type    = number
+  default = 1024
 }
 
 variable "vm_part_usr_size" {
-  type    = string
-  default = "1024M"
+  type    = number
+  default = 6144
 }
 
 variable "vm_sockets" {
@@ -185,9 +192,4 @@ variable "vm_os" {
 variable "timeout" {
   type    = string
   default = "30m"
-}
-
-variable "vm_swap_size" {
-  type    = string
-  default = "2048"
 }

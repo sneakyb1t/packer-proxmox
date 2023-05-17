@@ -187,9 +187,6 @@ variable "timeout" {
   default = "30m"
 }
 
-variable "http_interface" {
-  type    = string
-}
 variable "vm_swap_size" {
   type    = number
   default = 2048

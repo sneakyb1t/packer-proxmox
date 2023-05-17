@@ -1,0 +1,18 @@
+image:
+  name: hashicorp/packer:1.8
+  entrypoint:
+    - '/usr/bin/env'
+    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
+before_script:
+  - packer --version
+
+stages:
+  - validate
+  - build
+
+validate:
+  stage: validate
+  tags: [vle-home]
+  script:
+    - find -maxdepth 2 -type d -wholename "./*/*" -not -path "./.git/*" | xargs -I {} bash -c "echo 'Validating {}' && packer validate {}"
