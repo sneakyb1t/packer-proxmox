@@ -26,97 +26,97 @@ d-i partman-lvm/device_remove_lvm boolean true
 d-i partman-auto-lvm/new_vg_name string sys
 d-i partman-efi/non_efi_system boolean true
 
-d-i partman-auto/expert_recipe string                     \
-  custom ::                                               \
-    ${vm_part_efi_size} ${vm_part_efi_size} ${vm_part_efi_size} fat32                                  \
-    $primary{ }                                           \
-    mountpoint{ /boot/efi }                               \
-    method{ efi }                                         \
-    format{ }                                             \
-    use_filesystem{ }                                     \
-    filesystem{ vfat }                                    \
-    label { EFIFS }                                       \
-    .                                                     \
-    ${vm_swap_size} ${vm_swap_size} ${vm_swap_size} linux-swap \
-    method{ swap } \
-    format{ } \
+d-i partman-auto/expert_recipe string                                              \
+  custom ::                                                                        \
+    ${vm_part_efi_size} ${vm_part_efi_size} ${vm_part_efi_size} fat32              \
+    $primary{ }                                                                    \
+    mountpoint{ /boot/efi }                                                        \
+    method{ efi }                                                                  \
+    format{ }                                                                      \
+    use_filesystem{ }                                                              \
+    filesystem{ vfat }                                                             \
+    label { EFIFS }                                                                \
+    .                                                                              \
+    ${vm_part_boot_size} ${vm_part_boot_size} ${vm_part_boot_size} ${vm_fs_type}   \
+    $bootable{ }                                                                   \
+    $primary{ }                                                                    \
+    mountpoint{ /boot }                                                            \
+    method{ format }                                                               \
+    format{ }                                                                      \
+    use_filesystem{ }                                                              \
+    filesystem{ ${vm_fs_type} }                                                    \
+    label { BOOTFS }                                                               \
+    .                                                                              \
+    ${vm_part_swap_size} ${vm_part_swap_size} ${vm_part_swap_size} linux-swap      \
+    $lvmok{ }                                                                      \
+    lv_name{ swap }                                                                \
+    in_vg { sys }                                                                  \
+    method{ swap }                                                                 \
+    format{ }                                                                      \
+    label { SWAPFS }                                                               \
+    .                                                                              \
+    ${vm_part_root_size} ${vm_part_root_size} ${vm_part_root_size} ${vm_fs_type}   \
+    $lvmok{ }                                                                      \
+    mountpoint{ / }                                                                \
+    lv_name{ root }                                                                \
+    in_vg { sys }                                                                  \
+    method{ format }                                                               \
+    format{ }                                                                      \
+    use_filesystem{ }                                                              \
+    filesystem{ ${vm_fs_type} }                                                    \
+    label { ROOTFS }                                                               \
+    .                                                                              \
+    ${vm_part_tmp_size} ${vm_part_tmp_size} ${vm_part_tmp_size} ${vm_fs_type}      \
+    $lvmok{ }                                                                      \
+    mountpoint{ /tmp }                                                             \
+    lv_name{ tmp }                                                                 \
+    in_vg { sys }                                                                  \
+    method{ format }                                                               \
+    format{ }                                                                      \
+    use_filesystem{ }                                                              \
+    filesystem{ ${vm_fs_type} }                                                    \
+    label { TMPFS }                                                                \
+    options/nodev{ nodev }                                                         \
+    options/noexec{ noexec }                                                       \
+    options/nosuid{ nosuid }                                                       \
+    .                                                                              \
+    ${vm_part_var_size} ${vm_part_var_size} ${vm_part_var_size} ${vm_fs_type}      \
+    $lvmok{ }                                                                      \
+    mountpoint{ /var }                                                             \
+    lv_name{ var }                                                                 \
+    in_vg { sys }                                                                  \
+    method{ format }                                                               \
+    format{ }                                                                      \
+    use_filesystem{ }                                                              \
+    filesystem{ ${vm_fs_type} }                                                    \
+    label { VARFS }                                                                \
+    options/nodev{ nodev }                                                         \
+    .                                                                              \
+    ${vm_part_log_size} ${vm_part_log_size} ${vm_part_log_size} ${vm_fs_type}      \
+    $lvmok{ }                                                                      \
+    mountpoint{ /var/log }                                                         \
+    lv_name{ log }                                                                 \
+    in_vg { sys }                                                                  \
+    method{ format }                                                               \
+    format{ }                                                                      \
+    use_filesystem{ }                                                              \
+    filesystem{ ${vm_fs_type} }                                                    \
+    label { LOGFS }                                                                \
+    options/nodev{ nodev }                                                         \
+    options/noexec{ noexec }                                                       \
+    options/nosuid{ nosuid }                                                       \
+    .                                                                              \
+    ${vm_part_usr_size} ${vm_part_usr_size} ${vm_part_usr_size} ${vm_fs_type}      \
+    $lvmok{ }                                                                      \
+    mountpoint{ /usr }                                                             \
+    lv_name{ usr }                                                                 \
+    in_vg { sys }                                                                  \
+    method{ format }                                                               \
+    format{ }                                                                      \
+    use_filesystem{ }                                                              \
+    filesystem{ ${vm_fs_type} }                                                    \
+    label { USRFS }                                                                \
     .
-    ${vm_part_boot_size} ${vm_part_boot_size} ${vm_part_boot_size} ext4                                    \
-    $bootable{ }                                          \
-    $primary{ }                                           \
-    mountpoint{ /boot }                                   \
-    method{ format }                                      \
-    format{ }                                             \
-    use_filesystem{ }                                     \
-    filesystem{ ext4 }                                    \
-    label { BOOTFS }                                      \
-    .                                                     \
-    ${vm_part_root_size} ${vm_part_root_size} ${vm_part_root_size} ext4                                      \
-    $lvmok{ }                                             \
-    mountpoint{ / }                                       \
-    lv_name{ root }                                       \
-    in_vg { sys }                                         \
-    method{ format }                                      \
-    format{ }                                             \
-    use_filesystem{ }                                     \
-    filesystem{ ext4 }                                    \
-    label { ROOTFS }                                      \
-    .                                                     \
-    ${vm_part_tmp_size} ${vm_part_tmp_size} ${vm_part_tmp_size} ext4                                    \
-    $lvmok{ }                                             \
-    mountpoint{ /tmp }                                    \
-    lv_name{ tmp }                                        \
-    in_vg { sys }                                	  \
-    method{ format }                                      \
-    format{ }                                             \
-    use_filesystem{ }                                     \
-    filesystem{ ext4 }                                    \
-    label { TMPFS }                                       \
-    options/nodev{ nodev }                                \
-    options/noexec{ noexec }                              \
-    options/nosuid{ nosuid }                              \
-    .                                                     \
-    ${vm_part_var_size} ${vm_part_var_size} ${vm_part_var_size} ext4                                    \
-    $lvmok{ }                                             \
-    mountpoint{ /var }                                    \
-    lv_name{ var }                                        \
-    in_vg { sys }                                	  \
-    method{ format }                                      \
-    format{ }                                             \
-    use_filesystem{ }                                     \
-    filesystem{ ext4 }                                    \
-    label { VARFS }                                       \
-    options/nodev{ nodev }                                \
-    .                                                     \
-    ${vm_part_log_size} ${vm_part_log_size} ${vm_part_log_size} ext4                                    \
-    $lvmok{ }                                             \
-    mountpoint{ /var/log }                                \
-    lv_name{ log }                                        \
-    in_vg { sys }                                	  \
-    method{ format }                                      \
-    format{ }                                             \
-    use_filesystem{ }                                     \
-    filesystem{ ext4 }                                    \
-    label { LOGFS }                                       \
-    options/nodev{ nodev }                                \
-    options/noexec{ noexec }                              \
-    options/nosuid{ nosuid }                              \
-    .                                                     \
-    ${vm_part_usr_size} ${vm_part_usr_size} ${vm_part_usr_size} ext4                                    \
-    $lvmok{ }                                             \
-    mountpoint{ /usr }                                    \
-    lv_name{ usr }                                        \
-    in_vg { sys }                                	  \
-    method{ format }                                      \
-    format{ }                                             \
-    use_filesystem{ }                                     \
-    filesystem{ ext4 }                                    \
-    label { USRFS }                                       \
-    options/nodev{ nodev }                                \
-    options/noexec{ noexec }                              \
-    options/nosuid{ nosuid }                              \
-    .                                                     \
-    
 
 d-i partman-partitioning/confirm_write_new_label boolean true
 d-i partman/choose_partition select finish

@@ -26,15 +26,15 @@ source "proxmox-iso" "debian11" {
 
   }
   efi_config {
-  efi_storage_pool         = var.proxmox_storage_pool
-  pre_enrolled_keys        = true
-  efi_type                 = "4m"
+    efi_storage_pool  = var.proxmox_storage_pool
+    pre_enrolled_keys = true
+    efi_type          = "4m"
   }
 
   scsi_controller          = var.proxmox_scsi_controller
   insecure_skip_tls_verify = var.proxmox_insecure
   iso_file                 = "${var.proxmox_datastore}:iso/${var.iso_file}"
-  os		           = var.vm_os
+  os                       = var.vm_os
   cpu_type                 = var.vm_cpu_type
   cores                    = var.vm_cores
   sockets                  = var.vm_sockets
@@ -59,23 +59,24 @@ source "proxmox-iso" "debian11" {
 
   http_content = {
     "/ks.cfg" = templatefile("${abspath(path.root)}/http/ks.pkrtpl.hcl", {
-      vm_username	       = var.vm_username
-      vm_password              = var.vm_password
-      vm_password_encrypted    = var.vm_password_encrypted
-      vm_pubkey                = var.vm_pubkey
-      vm_language              = var.vm_language
-      vm_keyboard              = var.vm_keyboard
-      vm_timezone              = var.vm_timezone
-      vm_fs_type               = var.vm_fs_type
-      vm_hostname              = var.vm_hostname
-      vm_part_efi_size         = var.vm_part_efi_size
-      vm_part_boot_size        = var.vm_part_boot_size
-      vm_part_root_size        = var.vm_part_root_size
-      vm_part_tmp_size         = var.vm_part_tmp_size
-      vm_part_var_size         = var.vm_part_var_size
-      vm_part_log_size         = var.vm_part_log_size
-      vm_part_usr_size         = var.vm_part_usr_size
-      vm_swap_size             = var.vm_swap_size
+      vm_username           = var.vm_username
+      vm_password           = var.vm_password
+      vm_password_encrypted = var.vm_password_encrypted
+      vm_pubkey             = var.vm_pubkey
+      vm_language           = var.vm_language
+      vm_keyboard           = var.vm_keyboard
+      vm_timezone           = var.vm_timezone
+      vm_disk_type          = var.vm_disk_type
+      vm_fs_type            = var.vm_fs_type
+      vm_hostname           = var.vm_hostname
+      vm_part_efi_size      = var.vm_part_efi_size
+      vm_part_boot_size     = var.vm_part_boot_size
+      vm_part_root_size     = var.vm_part_root_size
+      vm_part_tmp_size      = var.vm_part_tmp_size
+      vm_part_var_size      = var.vm_part_var_size
+      vm_part_log_size      = var.vm_part_log_size
+      vm_part_usr_size      = var.vm_part_usr_size
+      vm_part_swap_size     = var.vm_part_swap_size
     })
   }
 }
@@ -83,11 +84,11 @@ source "proxmox-iso" "debian11" {
 build {
   sources = ["source.proxmox-iso.debian11"]
   provisioner "file" {
-    source = "debian/11/openscap.sh"
+    source      = "debian/11/openscap.sh"
     destination = "~/openscap.sh"
-}
+  }
   provisioner "shell" {
     remote_folder = "~"
-    inline = ["sudo apt-get update -y", "sudo apt-get upgrade -y", "sudo bash ~/openscap.sh "]
+    inline        = ["sudo apt-get update -y", "sudo apt-get upgrade -y", "sudo bash ~/openscap.sh "]
   }
 }
