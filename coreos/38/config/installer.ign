@@ -1,0 +1,45 @@
+{
+  "ignition": {
+    "version": "3.4.0"
+  },
+  "passwd": {
+    "users": [
+      {
+        "groups": [
+          "wheel",
+          "sudo"
+        ],
+        "name": "packer",
+        "sshAuthorizedKeys": [
+          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCZ391jiPNiscavMEeKK08roPB0UhReEhRRicpqI0cy88H4OHHUOPhHdiOZO7tIBHDS2ZBorjZBxNbZg8DLT+dwrW41qbnHrOhcLb7MoAlHosghA6wuMNKshSRzE37jD5le7gqOHreL24TFjV/s6sFanDdvaMoGa3CQd+e6Q8Vq3Y6XZjDylAj35ZD4PBUb+MIUiKReOJ0E0CqT0hoWocdddlCxrJCZweydSkG7oJ44MHvwRIYrHQj4fEJANMKwtEFz4U745e96pZ63vEqK4uZgIbOrcXtSDxMy7W5HNPKpKpdddXwGeyPTecwP2+8iXLWbQ+ITU1dqtGHXHwI7FNLHiYUzIOZ8XCax6SvDqrhg06itgfncwf1eiXo/bPRF9zo5GladjoHQZ0Hsvt//yjSz/lECoQ4b5JjQUkDfPl+qRCNm/WTgvSqfZltb+w96ntS3a+PjGWI59wJcAXC2svs5Bm7gFXlz1YBNdgiWVKqhiO76epaIiGh4MD2FzWfbiHs="
+        ]
+      }
+    ]
+  },
+  "storage": {
+    "files": [
+      {
+        "path": "/usr/local/bin/install_qemu_agent.sh",
+        "contents": {
+          "compression": "",
+          "source": "data:,%23!%2Fbin%2Fbash%0Agit%20clone%20https%3A%2F%2Fgit.qemu.org%2Fgit%2Fqemu.git%0Acd%20qemu%0A.%2Fconfigure%20--enable-guest-agent%0Amake%0Asudo%20make%20install%0A"
+        },
+        "mode": 493
+      }
+    ]
+  },
+  "systemd": {
+    "units": [
+      {
+        "contents": "[Unit]\nDescription=Install QEMU guest agent\nAfter=network-online.target\nConditionFirstBoot=true\n\n[Service]\nType=oneshot\nExecStart=/usr/local/bin/install_qemu_agent.sh\nRemainAfterExit=yes\n\n[Install]\nWantedBy=multi-user.target\n",
+        "enabled": true,
+        "name": "install-qemu-guest-agent.service"
+      },
+      {
+        "contents": "[Unit]\nDescription=Runs QEMU guest agent\nAfter=network-online.target\n\n[Service]\nExecStart=/usr/local/bin/qemu-ga\nRestart=always\nRestartSec=3\nStartLimitIntervalSec=0\n\n[Install]\nWantedBy=multi-user.target\n",
+        "enabled": true,
+        "name": "qemu-guest-agent.service"
+      }
+    ]
+  }
+}
