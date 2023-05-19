@@ -1,17 +1,11 @@
 source "proxmox" "coreos" {
-  boot_wait = "2s"
-  boot_command = [
-    "<spacebar><wait><spacebar><wait><spacebar><wait><spacebar><wait><spacebar><wait>",
-    "<tab><wait>",
-    "<down><down><end>",
-    " ignition.config.url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/installer.ign",
-    "<enter>"
-  ]
-  http_directory = "config"
+  boot_wait    = "10s"
+  boot_command = ["<up>e<down><down><end> ignition.config.url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/installer.ign<leftCtrlOn>x<leftCtrlOff>"]
+  http_directory = "./coreos/38/config"
 
   # load template ignition file
   additional_iso_files {
-    cd_files = ["./coreos/38/config/installer.ign"]
+    cd_files = ["./coreos/38/config/template.ign"]
     iso_storage_pool = "local"
     unmount = true
   }
@@ -51,10 +45,6 @@ source "proxmox" "coreos" {
   vm_id         = var.proxmox_vm_id
   bios          = "ovmf"
 
-  vga {
-    type = "qxl"
-    memory = "16"
-  }
   ssh_private_key_file = "~/.ssh/id_rsa_personal-internal_ansible"
 }
 
