@@ -8,23 +8,6 @@ passwd:
       groups:
         - wheel
         - sudo
-storage:
-  files:
-    - path: /etc/containers/storage.conf
-      mode: 0644
-      contents:
-        inline: |
-          [storage]
-          driver = "overlay"
-          runroot = "/run/containers/storage"
-          graphroot = "/tmp/temp_storage"
-    - path: /home/packer/Dockerfile
-      mode: 0644
-      contents:
-        inline: |
-          FROM docker.io/ubuntu:latest
-          RUN apt-get update && \
-              apt-get install -y qemu-guest-agent
 systemd:
   units:
     - name: qemu-guest-agent.service
@@ -32,10 +15,9 @@ systemd:
       contents: |
         [Unit]
         Description=Build and run QEMU guest agent
-        After=network-online.target
-        Wants=network-online.target
         [Service]
-        ExecStartPre=-/usr/bin/podman build /home/packer/ -t qemu-guest-agent_docker
-        ExecStart=/usr/bin/podman run --privileged --network host qemu-guest-agent_docker
+        Type=oneshot
+        RemainAfterExit=yes
+        ExecStart=docker run --rm -d --name qemu-ga -v /etc/os-release:/etc/os-release:ro --device /dev/virtio-ports/org.qemu.guest_agent.0:/dev/virtio-ports/org.qemu.guest_agent.0 --net=host --uts=host docker.io/danskadra/qemu-ga
         [Install]
         WantedBy=multi-user.target

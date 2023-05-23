@@ -2,6 +2,13 @@ source "proxmox" "coreos" {
   boot_wait    = "10s"
   boot_command = ["<up>e<down><down><end> ignition.config.url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/installer.ign<leftCtrlOn>x<leftCtrlOff>"]
   http_directory = "./coreos/38/config"
+  disks {
+    type              = var.vm_disk_type
+    disk_size         = var.vm_disk_size
+    storage_pool      = var.proxmox_storage_pool
+    storage_pool_type = var.proxmox_storage_pool_type
+
+  }
 
   # load template ignition file
   additional_iso_files {
@@ -38,7 +45,7 @@ source "proxmox" "coreos" {
   proxmox_url   = var.proxmox_url
   ssh_password  = var.vm_password
   ssh_timeout   = var.timeout
-  ssh_username  = var.vm_username
+  ssh_username  = "core"
   template_name = var.proxmox_template_name
   unmount_iso   = true
   username      = var.proxmox_username
@@ -54,7 +61,8 @@ build {
     inline = [
       "sudo mkdir /tmp/iso",
       "sudo mount /dev/sr1 /tmp/iso -o ro",
-      "sudo coreos-installer install /dev/vda --ignition-file /tmp/iso/installer.ign",
+      "sudo coreos-installer install /dev/vda --ignition-file /tmp/iso/template.ign",
+      "sudo shutdown -h +1"
     ]
   }
 }

@@ -2,7 +2,7 @@ variant: fcos
 version: 1.5.0
 passwd:
   users:
-    - name: packer
+    - name: core
       ssh_authorized_keys:
         - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCZ391jiPNiscavMEeKK08roPB0UhReEhRRicpqI0cy88H4OHHUOPhHdiOZO7tIBHDS2ZBorjZBxNbZg8DLT+dwrW41qbnHrOhcLb7MoAlHosghA6wuMNKshSRzE37jD5le7gqOHreL24TFjV/s6sFanDdvaMoGa3CQd+e6Q8Vq3Y6XZjDylAj35ZD4PBUb+MIUiKReOJ0E0CqT0hoWocdddlCxrJCZweydSkG7oJ44MHvwRIYrHQj4fEJANMKwtEFz4U745e96pZ63vEqK4uZgIbOrcXtSDxMy7W5HNPKpKpdddXwGeyPTecwP2+8iXLWbQ+ITU1dqtGHXHwI7FNLHiYUzIOZ8XCax6SvDqrhg06itgfncwf1eiXo/bPRF9zo5GladjoHQZ0Hsvt//yjSz/lECoQ4b5JjQUkDfPl+qRCNm/WTgvSqfZltb+w96ntS3a+PjGWI59wJcAXC2svs5Bm7gFXlz1YBNdgiWVKqhiO76epaIiGh4MD2FzWfbiHs=
       groups:
@@ -22,9 +22,12 @@ storage:
       mode: 0644
       contents:
         inline: |
-          FROM docker.io/ubuntu:latest
-          RUN apt-get update && \
-              apt-get install -y qemu-guest-agent
+          FROM alpine:3.18
+
+          RUN apk add --update --no-cache qemu-guest-agent
+
+          ENTRYPOINT [ "/usr/bin/qemu-ga" ]
+          CMD ["-m", "virtio-serial", "-p", "/dev/virtio-ports/org.qemu.guest_agent.0"]
 systemd:
   units:
     - name: qemu-guest-agent.service
@@ -32,10 +35,9 @@ systemd:
       contents: |
         [Unit]
         Description=Build and run QEMU guest agent
-        After=network-online.target
-        Wants=network-online.target
         [Service]
-        ExecStartPre=-/usr/bin/podman build /home/packer/ -t qemu-guest-agent_docker
-        ExecStart=/usr/bin/podman run --privileged --network host qemu-guest-agent_docker
+        Type=oneshot
+        RemainAfterExit=yes
+        ExecStart=docker run --rm -d --name qemu-ga -v /etc/os-release:/etc/os-release:ro --device /dev/virtio-ports/org.qemu.guest_agent.0:/dev/virtio-ports/org.qemu.guest_agent.0 --net=host --uts=host docker.io/danskadra/qemu-ga
         [Install]
         WantedBy=multi-user.target

@@ -9,7 +9,7 @@
           "wheel",
           "sudo"
         ],
-        "name": "packer",
+        "name": "core",
         "sshAuthorizedKeys": [
           "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCZ391jiPNiscavMEeKK08roPB0UhReEhRRicpqI0cy88H4OHHUOPhHdiOZO7tIBHDS2ZBorjZBxNbZg8DLT+dwrW41qbnHrOhcLb7MoAlHosghA6wuMNKshSRzE37jD5le7gqOHreL24TFjV/s6sFanDdvaMoGa3CQd+e6Q8Vq3Y6XZjDylAj35ZD4PBUb+MIUiKReOJ0E0CqT0hoWocdddlCxrJCZweydSkG7oJ44MHvwRIYrHQj4fEJANMKwtEFz4U745e96pZ63vEqK4uZgIbOrcXtSDxMy7W5HNPKpKpdddXwGeyPTecwP2+8iXLWbQ+ITU1dqtGHXHwI7FNLHiYUzIOZ8XCax6SvDqrhg06itgfncwf1eiXo/bPRF9zo5GladjoHQZ0Hsvt//yjSz/lECoQ4b5JjQUkDfPl+qRCNm/WTgvSqfZltb+w96ntS3a+PjGWI59wJcAXC2svs5Bm7gFXlz1YBNdgiWVKqhiO76epaIiGh4MD2FzWfbiHs="
         ]
@@ -30,7 +30,7 @@
         "path": "/home/packer/Dockerfile",
         "contents": {
           "compression": "",
-          "source": "data:;base64,RlJPTSBkb2NrZXIuaW8vdWJ1bnR1OmxhdGVzdApSVU4gYXB0LWdldCB1cGRhdGUgJiYgXAogICAgYXB0LWdldCBpbnN0YWxsIC15IHFlbXUtZ3Vlc3QtYWdlbnQK"
+          "source": "data:;base64,RlJPTSBhbHBpbmU6My4xOAoKUlVOIGFwayBhZGQgLS11cGRhdGUgLS1uby1jYWNoZSBxZW11LWd1ZXN0LWFnZW50CgpFTlRSWVBPSU5UIFsgIi91c3IvYmluL3FlbXUtZ2EiIF0KQ01EIFsiLW0iLCAidmlydGlvLXNlcmlhbCIsICItcCIsICIvZGV2L3ZpcnRpby1wb3J0cy9vcmcucWVtdS5ndWVzdF9hZ2VudC4wIl0K"
         },
         "mode": 420
       }
@@ -39,7 +39,7 @@
   "systemd": {
     "units": [
       {
-        "contents": "[Unit]\nDescription=Build and run QEMU guest agent\nAfter=network-online.target\nWants=network-online.target\n[Service]\nExecStartPre=-/usr/bin/podman build /home/packer/ -t qemu-guest-agent_docker\nExecStart=/usr/bin/podman run --privileged --network host qemu-guest-agent_docker\n[Install]\nWantedBy=multi-user.target\n",
+        "contents": "[Unit]\nDescription=Build and run QEMU guest agent\n[Service]\nType=oneshot\nRemainAfterExit=yes\nExecStart=docker run --rm -d --name qemu-ga -v /etc/os-release:/etc/os-release:ro --device /dev/virtio-ports/org.qemu.guest_agent.0:/dev/virtio-ports/org.qemu.guest_agent.0 --net=host --uts=host docker.io/danskadra/qemu-ga\n[Install]\nWantedBy=multi-user.target\n",
         "enabled": true,
         "name": "qemu-guest-agent.service"
       }
