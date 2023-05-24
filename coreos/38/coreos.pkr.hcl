@@ -52,7 +52,7 @@ source "proxmox" "coreos" {
   vm_id         = var.proxmox_vm_id
   bios          = "ovmf"
 
-  ssh_private_key_file = "~/.ssh/id_rsa_personal-internal_ansible"
+  ssh_private_key_file = var.ssh_private_key
 }
 
 build {
