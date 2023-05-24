@@ -8,6 +8,9 @@
 # Locale and Keyboard
 d-i debian-installer/locale string ${vm_language}
 d-i keyboard-configuration/xkb-keymap select ${vm_keyboard}
+d-i debian-installer/country string FR
+d-i debian-installer/locale select en_US.UTF-8
+d-i localechooser/supported-locales multiselect en_US.UTF-8
 
 # Clock and Timezone
 d-i clock-setup/utc boolean true
