@@ -191,3 +191,8 @@ variable "vm_swap_size" {
   type    = string
   default = "2G"
 }
+
+variable "ssh_private_key" {
+  type    = string
+  default = ""
+}
