@@ -1,7 +1,7 @@
 Packer for Proxmox
 ===================
 
-This repository provides an easy way to create templates in Proxmox using Packer and the Proxmox plugin.
+This repository provides an easy way to create VM templates in Proxmox using Packer and the Proxmox plugin.
 You can install packer and provision either from Proxmox or any other host that has access to Proxmox API
 
 Prerequisites
@@ -53,9 +53,6 @@ packer build -var-file=common.pkrvars.hcl ubuntu/22.04
 packer build -var-file=common.pkrvars.hcl rocky/9.1
 packer build -var-file=common.pkrvars.hcl debian/11
 packer build -var-file=common.pkrvars.hcl rhel/8.7
-packer build -var-file=common.pkrvars.hcl coreos/38
-
-
 ```
 
 Customization
@@ -69,4 +66,40 @@ To enable debug logging, run:
 
 ```
 PACKER_LOG=1 packer build -debug -var-file=common.pkrvars.hcl rocky/9.1
+```
+
+Specific OS requirements
+=============
+CoreOS
+In order to build a CoreOS template you will need to have ignition configuration files.
+To generate the configuration you can eitheri:
+
+- Convert the  example butane files provided in this repo and convert it to ignition files
+
+install butane:
+https://coreos.github.io/butane/getting-started/
+
+
+```
+cd coreos/38/config
+cp installer.bu{.example,}
+cp template.bu{.example,}
+```
+Edit edit the installer.bu and template.bu
+
+Convert your butane configuration files to ignition format:
+```
+butane --pretty --strict installer.bu > installer.ign
+butane --pretty --strict template.bu > template.ign
+```
+
+Or
+
+- Create ignition files manually https://docs.fedoraproject.org/en-US/fedora-coreos/producing-ign/
+
+Then
+
+build coreos template
+```
+packer build -var-file=common.pkrvars.hcl coreos/38
 ```
