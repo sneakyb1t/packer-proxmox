@@ -1,2 +1,4 @@
 common.pkrvars.hcl
 terraform.tfvars
+*.ign
+*.bu
