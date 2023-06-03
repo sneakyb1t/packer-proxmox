@@ -4,7 +4,7 @@ passwd:
   users:
     - name: core
       ssh_authorized_keys:
-        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCZ391jiPNiscavMEeKK08roPB0UhReEhRRicpqI0cy88H4OHHUOPhHdiOZO7tIBHDS2ZBorjZBxNbZg8DLT+dwrW41qbnHrOhcLb7MoAlHosghA6wuMNKshSRzE37jD5le7gqOHreL24TFjV/s6sFanDdvaMoGa3CQd+e6Q8Vq3Y6XZjDylAj35ZD4PBUb+MIUiKReOJ0E0CqT0hoWocdddlCxrJCZweydSkG7oJ44MHvwRIYrHQj4fEJANMKwtEFz4U745e96pZ63vEqK4uZgIbOrcXtSDxMy7W5HNPKpKpdddXwGeyPTecwP2+8iXLWbQ+ITU1dqtGHXHwI7FNLHiYUzIOZ8XCax6SvDqrhg06itgfncwf1eiXo/bPRF9zo5GladjoHQZ0Hsvt//yjSz/lECoQ4b5JjQUkDfPl+qRCNm/WTgvSqfZltb+w96ntS3a+PjGWI59wJcAXC2svs5Bm7gFXlz1YBNdgiWVKqhiO76epaIiGh4MD2FzWfbiHs=
+        - ssh-rsa AAAAB3N...
       groups:
         - wheel
         - sudo
