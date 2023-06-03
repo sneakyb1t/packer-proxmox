@@ -13,7 +13,7 @@ source "proxmox" "coreos" {
   # load template ignition file
   additional_iso_files {
     cd_files = ["./coreos/38/config/template.ign"]
-    iso_storage_pool = "local"
+    iso_storage_pool = var.proxmox_datastore
     unmount = true
   }
   efi_config {
@@ -28,7 +28,9 @@ source "proxmox" "coreos" {
 
   scsi_controller          = var.proxmox_scsi_controller
   insecure_skip_tls_verify = var.proxmox_insecure
-  iso_file                 = "${var.proxmox_datastore}:iso/${var.iso_file}"
+  iso_url                  = var.iso_url
+  iso_storage_pool         = var.proxmox_storage_pool
+  iso_checksum             = var.iso_checksum
   os		           = var.vm_os
   cpu_type                 = var.vm_cpu_type
   cores                    = var.vm_cores
@@ -52,7 +54,7 @@ source "proxmox" "coreos" {
   vm_id         = var.proxmox_vm_id
   bios          = "ovmf"
 
-  ssh_private_key_file = var.ssh_private_key
+  ssh_private_key_file = "~/.ssh/id_rsa" 
 }
 
 build {

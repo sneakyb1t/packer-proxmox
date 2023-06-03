@@ -91,6 +91,6 @@ build {
   }
   provisioner "shell" {
     remote_folder = "~"
-    inline        = ["sudo apt-get update -y", "sudo apt-get upgrade -y", "sudo bash ~/openscap.sh "]
+    inline        = ["sudo apt-get update -y", "sudo apt-get upgrade -y", "sudo bash ~/openscap.sh", "mkdir -p ~/.ssh", "echo '${var.vm_pubkey}' >> ~/.ssh/authorized_keys"]
   }
 }
