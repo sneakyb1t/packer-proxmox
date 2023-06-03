@@ -1,7 +1,7 @@
 Packer for Proxmox
 ===================
 
-This repository provides an easy way to create templates in Proxmox using Packer and the Proxmox plugin.
+This repository provides an easy way to create VM templates in Proxmox using Packer and the Proxmox plugin.
 You can install packer and provision either from Proxmox or any other host that has access to Proxmox API
 
 Prerequisites
@@ -69,4 +69,20 @@ To enable debug logging, run:
 
 ```
 PACKER_LOG=1 packer build -debug -var-file=common.pkrvars.hcl rocky/9.1
+```
+
+Specific OS requirements
+=============
+CoreOS
+In order to build a CoreOS template you will need to copy and edit the butane templates:
+```
+cd coreos/38/config
+cp ignition.bu{.example,}
+cp template.bu{.example,}
+```
+then convert your butane configuration files to ignition format:
+
+```
+butane --pretty --strict installer.bu > installer.ign
+butane --pretty --strict template.bu > template.ign
 ```
