@@ -1,5 +1,0 @@
-pm_api_url   = "https://pve1:8006/api2/json"
-pm_user      = "root@pam"
-pm_password  = "your_password"
-lxc_password = "password"
-ssh_pub_key  = "ssh-rsa AAAAB3N..."
