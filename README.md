@@ -53,6 +53,9 @@ packer build -var-file=common.pkrvars.hcl ubuntu/22.04
 packer build -var-file=common.pkrvars.hcl rocky/9.1
 packer build -var-file=common.pkrvars.hcl debian/11
 packer build -var-file=common.pkrvars.hcl rhel/8.7
+packer build -var-file=common.pkrvars.hcl coreos/38
+
+
 ```
 
 Customization
