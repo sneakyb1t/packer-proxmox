@@ -72,6 +72,6 @@ build {
 
   provisioner "shell" {
     remote_folder = "~"
-    inline = ["sudo bash ~/openscap.sh"]
+    inline = ["sudo bash ~/openscap.sh", "mkdir -p ~/.ssh", "echo '${var.vm_pubkey}' >> ~/.ssh/authorized_keys"]
   }
 }

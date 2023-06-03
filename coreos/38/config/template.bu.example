@@ -4,7 +4,7 @@ passwd:
   users:
     - name: packer
       ssh_authorized_keys:
-        - ssh-rsa AAAAB3N...
+        - $SSH_PUB_KEY
       groups:
         - wheel
         - sudo
