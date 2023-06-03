@@ -77,6 +77,6 @@ build {
 }
   provisioner "shell" {
     remote_folder = "~"
-    inline = ["while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done", "sudo bash ~/openscap.sh"]
+    inline = ["while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done", "sudo bash ~/openscap.sh", "mkdir -p ~/.ssh", "echo '${var.vm_pubkey}' >> ~/.ssh/authorized_keys"]
 }
 }
