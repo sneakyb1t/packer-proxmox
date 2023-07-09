@@ -1,5 +1,5 @@
 source "proxmox" "coreos" {
-  boot_wait    = "10s"
+  boot_wait    = var.boot_wait
   boot_command = ["<up>e<down><down><end> ignition.config.url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/installer.ign<leftCtrlOn>x<leftCtrlOff>"]
   http_directory = "./coreos/38/config"
   disks {
