@@ -51,6 +51,11 @@ variable "iso_file" {
   type = string
 }
 
+variable "boot_wait" {
+  type    = string
+  default = "15s"
+}
+
 variable "vm_username" {
   type    = string
   sensitive = true

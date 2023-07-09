@@ -3,7 +3,7 @@ source "proxmox-iso" "ubuntu22" {
     "<wait><wait><wait>linux /casper/vmlinuz --- autoinstall ds='nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/'",
     "<enter><wait>",
   "<wait><wait><wait>initrd /casper/initrd<enter><wait>", "<wait>boot<enter>"]
-  boot_wait = "10s"
+  boot_wait = var.boot_wait
   disks {
     type              = var.vm_disk_type
     disk_size         = var.vm_disk_size
@@ -69,7 +69,7 @@ source "proxmox-iso" "ubuntu22" {
 
 build {
   sources = ["source.proxmox-iso.ubuntu22"]
-    
+
   provisioner "file" {
     source = "ubuntu/22.04/openscap.sh"
     destination = "~/openscap.sh"
