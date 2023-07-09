@@ -17,7 +17,7 @@ source "proxmox-iso" "debian11" {
     "<leftAltOn><f1><leftAltOff>",
     "<down><down><down><down><enter>"
   ]
-  boot_wait = "10s"
+  boot_wait = var.boot_wait
   disks {
     type              = var.vm_disk_type
     disk_size         = var.vm_disk_size
