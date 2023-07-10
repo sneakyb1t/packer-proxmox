@@ -66,6 +66,8 @@ source "proxmox-iso" "debian11" {
       vm_language           = var.vm_language
       vm_keyboard           = var.vm_keyboard
       vm_timezone           = var.vm_timezone
+      vm_locale             = var.vm_locale
+      vm_country            = var.vm_country
       vm_disk_type          = var.vm_disk_type
       vm_fs_type            = var.vm_fs_type
       vm_hostname           = var.vm_hostname
