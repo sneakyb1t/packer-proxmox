@@ -5,7 +5,7 @@ autoinstall:
     layout: ${vm_keyboard}
     toggle: null
     variant: ''
-  locale: ${vm_timezone}
+  locale: ${vm_locale}
   storage:
     config:
 
