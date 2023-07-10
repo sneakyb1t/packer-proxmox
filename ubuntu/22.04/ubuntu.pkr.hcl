@@ -53,6 +53,7 @@ source "proxmox-iso" "ubuntu22" {
       vm_language              = var.vm_language
       vm_keyboard              = var.vm_keyboard
       vm_timezone              = var.vm_timezone
+      vm_locale                = var.vm_locale
       vm_fs_type               = var.vm_fs_type
       vm_hostname              = var.vm_hostname
       vm_part_efi_size         = var.vm_part_efi_size

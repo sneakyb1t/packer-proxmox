@@ -99,7 +99,12 @@ variable "vm_fs_type" {
 
 variable "vm_timezone" {
   type    = string
-  default = "en_US"
+  default = "America/Los_Angeles"
+}
+
+variable "vm_locale" {
+  type    = string
+  default = "en_US.UTF-8"
 }
 
 variable "vm_memory" {
