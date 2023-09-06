@@ -1,18 +1,22 @@
-source "proxmox" "coreos" {
+source "proxmox-iso" "coreos" {
   boot_wait    = "15s"
+  boot_wait    = var.boot_wait
   boot_command = ["<up>e<down><down><end> ignition.config.url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/installer.ign<leftCtrlOn>x<leftCtrlOff>"]
   http_directory = "./coreos/38/config"
   disks {
     type              = var.vm_disk_type
     disk_size         = var.vm_disk_size
     storage_pool      = var.proxmox_storage_pool
-    storage_pool_type = var.proxmox_storage_pool_type
-
   }
 
   # load template ignition file
-  additional_iso_files {
-    cd_files = ["./coreos/38/config/template.ign"]
+  additional_iso_files  {
+    cd_content = {
+      "template.ign" = templatefile("${abspath(path.root)}/config/template.ign.hcl",
+      vm_password    = var.vm_password
+      vm_pubkey      = var.vm_pubkey
+      })
+}
     iso_storage_pool = var.proxmox_datastore
     unmount = true
   }
@@ -54,7 +58,14 @@ source "proxmox" "coreos" {
   vm_id         = var.proxmox_vm_id
   bios          = "ovmf"
 
-  ssh_private_key_file = "~/.ssh/id_rsa"
+  ssh_private_key_file = "var.vm_private_key"
+
+  http_content = {
+      "/installer.ign" = templatefile("${abspath(path.root)}/config/installer.ign.hcl", {
+      vm_password    = var.vm_password
+      vm_pubkey      = var.vm_pubkey
+    })
+  }
 }
 
 build {
@@ -68,4 +79,3 @@ build {
     ]
   }
 }
-
