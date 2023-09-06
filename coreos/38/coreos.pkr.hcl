@@ -1,5 +1,6 @@
 source "proxmox-iso" "coreos" {
   boot_wait    = "15s"
+  boot_wait    = var.boot_wait
   boot_command = ["<up>e<down><down><end> ignition.config.url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/installer.ign<leftCtrlOn>x<leftCtrlOff>"]
   disks {
     type              = var.vm_disk_type
@@ -10,7 +11,7 @@ source "proxmox-iso" "coreos" {
   # load template ignition file
   additional_iso_files  {
     cd_content = {
-      "template.ign" = templatefile("${abspath(path.root)}/config/template.ign.hcl",{
+      "template.ign" = templatefile("${abspath(path.root)}/config/template.ign.hcl",
       vm_password    = var.vm_password
       vm_pubkey      = var.vm_pubkey
       })
@@ -56,7 +57,11 @@ source "proxmox-iso" "coreos" {
   vm_id         = var.proxmox_vm_id
   bios          = "ovmf"
 
+<<<<<<< HEAD
   ssh_private_key_file = var.ssh_private_key
+=======
+  ssh_private_key_file = "var.vm_private_key"
+>>>>>>> db45749 (feat: add variables to ignition files)
 
   http_content = {
       "/installer.ign" = templatefile("${abspath(path.root)}/config/installer.ign.hcl", {
