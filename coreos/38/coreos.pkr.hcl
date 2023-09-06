@@ -57,7 +57,7 @@ source "proxmox-iso" "coreos" {
   vm_id         = var.proxmox_vm_id
   bios          = "ovmf"
 
-  ssh_private_key_file = "var.ssh_private_key"
+  ssh_private_key_file = var.ssh_private_key
 
   http_content = {
       "/installer.ign" = templatefile("${abspath(path.root)}/config/installer.ign.hcl", {
