@@ -57,15 +57,7 @@ source "proxmox-iso" "coreos" {
   vm_id         = var.proxmox_vm_id
   bios          = "ovmf"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
   ssh_private_key_file = var.ssh_private_key
-=======
-  ssh_private_key_file = "var.vm_private_key"
->>>>>>> db45749 (feat: add variables to ignition files)
-=======
-  ssh_private_key_file = "var.ssh_private_key"
->>>>>>> 6803b97 (fix: config file)
 
   http_content = {
       "/installer.ign" = templatefile("${abspath(path.root)}/config/installer.ign.hcl", {
