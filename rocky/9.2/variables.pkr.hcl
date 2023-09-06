@@ -47,7 +47,7 @@ variable "proxmox_scsi_controller" {
   default = "virtio-scsi-pci"
 }
 
-variable "iso_file" {
+variable "iso_url" {
   type = string
 }
 
@@ -200,4 +200,7 @@ variable "ssh_private_key" {
 variable "vm_swap_size" {
   type    = number
   default = 2048
+}
+variable "iso_checksum" {
+  type    = string
 }
