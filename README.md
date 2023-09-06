@@ -71,10 +71,12 @@ PACKER_LOG=1 packer build -debug -var-file=common.pkrvars.hcl rocky/9.1
 Specific OS requirements
 =============
 CoreOS
-In order to build a CoreOS template you will need to have ignition configuration files.
-To generate the configuration you can eitheri:
 
-- Convert the  example butane files provided in this repo and convert it to ignition files
+In order to build a CoreOS template you can simply include your ssh public key in the provided ignition configuration files.
+
+You can use the pregenerated ignition files in this project or you can generate your own configuration :
+
+- Convert the example butane files provided in this repo and convert it to ignition files
 
 install butane:
 https://coreos.github.io/butane/getting-started/
@@ -85,7 +87,7 @@ cd coreos/38/config
 cp installer.bu{.example,}
 cp template.bu{.example,}
 ```
-Edit edit the installer.bu and template.bu
+Edit the installer.bu and template.bu
 
 Convert your butane configuration files to ignition format:
 ```
