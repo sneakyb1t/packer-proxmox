@@ -1,46 +1,48 @@
+image:
+  name: hashicorp/packer:1.8
+  entrypoint:
+    - '/usr/bin/env'
+    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
+variables:
+  vars_file: "/home/gitlab-runner/data/secrets/packer-proxmox-vars.sh"
+
+before_script:
+  - packer --version
+
 stages:
+  - prerequisites
   - validate
-  - prerequis
   - build
-  - build_all
 
-validate:
-  stage: validate
-  tags: [sasal-home]
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: never
+    - if: $RUNNER != null
+      variables:
+        RUNNER_TAG: $RUNNER
+    - if: $GITLAB_USER_ID == "120697"
+      variables:
+        RUNNER_TAG: "vle-home-shell"
+    - if: $GITLAB_USER_ID == "3975485"
+      variables:
+        RUNNER_TAG: "vle-home-shell"
+
+load_vars:
+  stage: prerequisites
+  tags: [$RUNNER_TAG]
   script:
     - |
-      for folder in $(find . -type d -name '[0-9]*'); do
-        if [[ -d $folder ]]; then
-          # Extract distro and version from folder
-          IFS='/' read -ra FOLDER <<< "$folder"
-          OS=${FOLDER[1]}
-          VERSION=${FOLDER[2]}
-          if [ -n "$CI_COMMIT_MODIFIED_FILES" ] && [[ "$CI_COMMIT_MODIFIED_FILES" =~ "$folder/" || "$CI_COMMIT_MODIFIED_FILES" =~ "common.pkrvars.hcl.example" ]]; then
-            # Validate Packer configuration for the modified distro/version or common.hcl file
-            ls -alrth "$folder"
-            packer validate -var-file=common-ci.pkrvars.hcl "$folder"
-          else
-            echo "No changes in $folder or common.pkrvars.hcl.example Skipping validation."
-          fi
-        fi
-      done
-
-prerequis:
-  stage: prerequis
-  tags: [sasal-home]
-  script:
-    - |
-      #create necessary coreos config
+      echo "Load vars file if present"
+      [ -e $vars_file ] && set -a && . $vars_file || echo "no var file found"
+      echo "Generate coreos config files"
       envsubst < "coreos/38/config/installer.bu.example" > "coreos/38/config/installer.bu"
       envsubst < "coreos/38/config/template.bu.example"  > "coreos/38/config/template.bu"
       butane --pretty --strict coreos/38/config/installer.bu > coreos/38/config/installer.ign
       butane --pretty --strict coreos/38/config/template.bu > coreos/38/config/template.ign
-      if [ -f "common.pkrvars.hcl.example" ]; then
-        envsubst < "common.pkrvars.hcl.example" > "common-ci.pkrvars.hcl"
-        echo "Generated common-ci.pkrvars.hcl from common.pkrvars.hcl.example"
-      else
-        echo "common.pkrvars.hcl.example file not found"
-      fi
+      echo "Generate common vars file"
+      envsubst < "common.pkrvars.hcl.example" > "common-ci.pkrvars.hcl"
   artifacts:
     untracked: true
     paths:
@@ -48,41 +50,43 @@ prerequis:
       - coreos/38/config/template.ign
       - coreos/38/config/installer.ign
 
+validate:
+  stage: validate
+  tags:
+  - $RUNNER_TAG
+  script:
+    - find -maxdepth 2 -type d -wholename "./*/*" -not -path "./.git/*" |
+      xargs -I {} bash -c "echo 'Validating {}' && packer validate -var-file=common-ci.pkrvars.hcl {}"
+  needs:
+    - job: load_vars
+
 build:
   stage: build
+  tags: [$RUNNER_TAG]
   script:
     - |
-      for folder in $(find . -type d -name '[0-9]*'); do
-        if [[ -d $folder ]]; then
-          dir=$(basename "$folder")
-          # Extract distro and version from folder
-          IFS='/' read -ra FOLDER <<< "$dir"
-          OS=${FOLDER[0]}
-          VERSION=${FOLDER[1]}
-          if [[ -n "$CI_COMMIT_MODIFIED_FILES" && "$CI_COMMIT_MODIFIED_FILES" =~ (^| )"$dir"(/|$) ]]; then
-            # Build the machine using Packer for the modified distro/version
-            packer build -var-file=common-ci.pkrvars.hcl "$folder"
-          else
-            echo "No changes in $dir. Skipping build."
-          fi
+      export MODIFIED_FILES="$(git diff --name-only ${CI_COMMIT_BEFORE_SHA} ${CI_COMMIT_SHA})"
+      echo "${MODIFIED_FILES}"
+      for folder in $(find . -type d -name '[0-9]*' -not -path "./.git/*"); do
+        if [[ "$MODIFIED_FILES" =~ (^.*${folder/.\//}.*$) ]]; then
+        echo "Change detected in $folder, building"
+        packer build -var-file=common-ci.pkrvars.hcl $folder
+        else
+        echo "No changes in $folder. Skipping build."
         fi
       done
   needs:
-    - job: prerequis
-
+    - job: load_vars
 
 build_all:
-  stage: build_all
-  tags: [sasal-home]
+  stage: build
+  tags: [$RUNNER_TAG]
   script:
     - |
-      for folder in $(find . -type d -name '[0-9]*'); do
-        dir=$(basename "$folder")
-        # Extract distro and version from folder
-        IFS='/' read -ra FOLDER <<< "$dir"
-        OS=${FOLDER[0]}
-        VERSION=${FOLDER[1]}
-        packer build -var-file=common-ci.pkrvars.hcl "$folder"
+      for folder in $(find . -type d -name '[0-9]*' -not -path "./.git/*"); do
+        packer build -var-file=common-ci.pkrvars.hcl $folder
       done
   needs:
-    - job: prerequis
+    - job: load_vars
+  when: manual
+
