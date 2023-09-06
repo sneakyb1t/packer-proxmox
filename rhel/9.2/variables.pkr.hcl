@@ -17,7 +17,7 @@ variable "proxmox_username" {
 
 variable "proxmox_insecure" {
   type    = string
-  default = false
+  default = true
 }
 
 variable "proxmox_vm_id" {
@@ -104,7 +104,7 @@ variable "vm_timezone" {
 
 variable "vm_memory" {
   type = number
-  default = 512
+  default = 2048
 }
 
 variable "vm_disk_size" {

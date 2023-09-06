@@ -6,7 +6,6 @@ content_dir="content"
 # Define dependencies
 deps=(git cmake make libopenscap8 libxml2-utils ninja-build python3-jinja2 python3-yaml python3-setuptools xsltproc)
 
-
 # Install necessary dependencies
 install_dependencies() {
     sudo apt-get update
@@ -37,4 +36,3 @@ install_dependencies
 clone_complianceascode
 make_ubuntu_profiles
 run_oscap_xccdf
-
