@@ -1,5 +1,5 @@
 source "proxmox" "coreos" {
-  boot_wait    = var.boot_wait
+  boot_wait    = "15s"
   boot_command = ["<up>e<down><down><end> ignition.config.url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/installer.ign<leftCtrlOn>x<leftCtrlOff>"]
   http_directory = "./coreos/38/config"
   disks {
@@ -54,7 +54,7 @@ source "proxmox" "coreos" {
   vm_id         = var.proxmox_vm_id
   bios          = "ovmf"
 
-  ssh_private_key_file = "~/.ssh/id_rsa" 
+  ssh_private_key_file = "~/.ssh/id_rsa"
 }
 
 build {

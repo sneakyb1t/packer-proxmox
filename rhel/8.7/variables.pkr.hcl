@@ -17,7 +17,7 @@ variable "proxmox_username" {
 
 variable "proxmox_insecure" {
   type    = string
-  default = false
+  default = true
 }
 
 variable "proxmox_vm_id" {
