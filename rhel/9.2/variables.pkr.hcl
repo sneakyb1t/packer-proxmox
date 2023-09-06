@@ -192,6 +192,11 @@ variable "timeout" {
   default = "30m"
 }
 
+variable "ssh_private_key" {
+  type    = string
+  default = null
+}
+
 variable "vm_swap_size" {
   type    = number
   default = 2048
