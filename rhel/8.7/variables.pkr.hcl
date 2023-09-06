@@ -192,6 +192,11 @@ variable "timeout" {
   default = "30m"
 }
 
+variable "ssh_private_key" {
+  type    = string
+  default = "~/.ssh/id_rsa"
+}
+
 variable "vm_swap_size" {
   type    = number
   default = 2048

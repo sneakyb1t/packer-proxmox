@@ -204,6 +204,11 @@ variable "vm_os" {
   default = "l26"
 }
 
+variable "ssh_private_key" {
+  type    = string
+  default = "~/.ssh/id_rsa"
+}
+
 variable "timeout" {
   type    = string
   default = "30m"
