@@ -37,11 +37,6 @@ variable "proxmox_storage_pool" {
   type = string
 }
 
-variable "proxmox_storage_pool_type" {
-  type    = string
-  default = "lvm"
-}
-
 variable "proxmox_scsi_controller" {
   type    = string
   default = "virtio-scsi-pci"
@@ -208,4 +203,4 @@ variable "vm_swap_size" {
 }
 variable "iso_checksum" {
   type    = string
-} 
+}
