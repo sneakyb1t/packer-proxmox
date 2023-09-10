@@ -19,7 +19,9 @@ source "proxmox-iso" "ubuntu22" {
 
   scsi_controller          = var.proxmox_scsi_controller
   insecure_skip_tls_verify = var.proxmox_insecure
-  iso_file                 = "${var.proxmox_datastore}:iso/${var.iso_file}"
+  iso_url                  = var.iso_url
+  iso_storage_pool         = var.proxmox_storage_pool
+  iso_checksum             = var.iso_checksum
   os		           = var.vm_os
   cpu_type                 = var.vm_cpu_type
   cores                    = var.vm_cores
