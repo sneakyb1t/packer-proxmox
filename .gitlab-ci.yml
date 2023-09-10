@@ -9,6 +9,7 @@ variables:
 
 before_script:
   - packer --version
+  - packer init require.pkr.hcl
 
 stages:
   - prerequisites
