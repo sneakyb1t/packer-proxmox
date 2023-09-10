@@ -5,8 +5,6 @@ source "proxmox-iso" "rocky8" {
     type              = var.vm_disk_type
     disk_size         = var.vm_disk_size
     storage_pool      = var.proxmox_storage_pool
-    storage_pool_type = var.proxmox_storage_pool_type
-
   }
   efi_config {
   efi_storage_pool         = var.proxmox_storage_pool
