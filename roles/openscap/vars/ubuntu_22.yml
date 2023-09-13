@@ -1,6 +1,6 @@
 ---
 report_dir: "/tmp"
-tmp_dir: "/tmp/security"
+tmp_dir: "/tmp"
 profile_os_name: "ubuntu2204"
 
 deps:
