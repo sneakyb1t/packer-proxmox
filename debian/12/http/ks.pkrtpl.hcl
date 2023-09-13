@@ -133,7 +133,7 @@ d-i netcfg/get_domain string unassigned-domain
 
 # Mirror settings
 d-i mirror/country string manual
-d-i mirror/http/hostname string  https://deb.debian.org
+d-i mirror/http/hostname string deb.debian.org
 d-i mirror/http/directory string /debian
 d-i mirror/http/proxy string
 
