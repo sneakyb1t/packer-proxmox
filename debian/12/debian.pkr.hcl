@@ -1,4 +1,4 @@
-source "proxmox-iso" "debian11" {
+source "proxmox-iso" "debian12" {
   boot_command = [
     "<wait3s>c<wait3s>",
     "linux /install.amd/vmlinuz",
@@ -86,10 +86,10 @@ source "proxmox-iso" "debian11" {
 }
 
 build {
-  sources = ["source.proxmox-iso.debian11"]
+  sources = ["source.proxmox-iso.debian12"]
   provisioner "shell" {
     remote_folder = "~"
-    inline        = ["sudo apt-get update -y"," sudo apt-get upgrade -y", "sudo apt install ansible python3-pip git -y", "sudo pip3 install jinja2" ]
+    inline        = ["sudo apt-get update -y"," sudo apt-get upgrade -y", "sudo apt install ansible git -y" ]
   }
   provisioner "ansible-local" {
   playbook_file = "site.yml"
