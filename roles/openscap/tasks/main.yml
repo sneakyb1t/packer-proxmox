@@ -1,60 +1,12 @@
 ---
+- name: Include OS-specific variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "vars/{{ ansible_distribution|lower }}_{{ ansible_distribution_major_version }}.yml"
 
-- name: Set is_debian_11 flag
-  set_fact:
-    is_debian_11: true
-  when: ansible_facts['distribution'] == 'Debian' and ansible_facts['distribution_major_version'] == '11'
-
-- name: Set is_ubuntu_22 flag
-  set_fact:
-    is_ubuntu_22: true
-  when: ansible_facts['distribution'] == 'Ubuntu' and ansible_facts['distribution_major_version'] == '22'
-
-- name: Set is_rocky_8 flag
-  set_fact:
-    is_rocky_8: true
-  when: ansible_facts['distribution'] == 'Rocky' and ansible_facts['distribution_major_version'] == '8'
-
-- name: Set is_rhel_8 flag
-  set_fact:
-    is_rhel_8: true
-  when: ansible_facts['distribution'] == 'RedHat' and ansible_facts['distribution_major_version'] == '8'
-
-- name: Set is_rocky_9 flag
-  set_fact:
-    is_rocky_9: true
-  when: ansible_facts['distribution'] == 'Rocky' and ansible_facts['distribution_major_version'] == '9'
-
-- name: Set is_rhel_9 flag
-  set_fact:
-    is_rhel_9: true
-  when: ansible_facts['distribution'] == 'RedHat' and ansible_facts['distribution_major_version'] == '9'
-
-- name: Set is_coreos_38 flag
-  set_fact:
-    is_coreos_38: true
-  when: ansible_facts['distribution'] == 'CoreOS' and ansible_facts['distribution_major_version'] == '38'
-
-- include_vars: debian_11.yml
-  when: is_debian_11 
-
-- include_vars: ubuntu_22.yml
-  when: is_ubuntu_22 
-
-- include_vars: rocky_8.yml
-  when: is_rocky_8 
-
-- include_vars: rhel_8.yml
-  when: is_rhel_8 
-
-- include_vars: rocky_9.yml
-  when: is_rocky_9 
-
-- include_vars: rhel_9.yml
-  when: is_rhel_9 
-
-#- include_vars: coreos_38.yml
-#  when: is_core_38 
+- name: Debug variables
+  debug:
+    var: vars
 
 - name: Include openscap install tasks
   ansible.builtin.include_tasks: openscap.yml
