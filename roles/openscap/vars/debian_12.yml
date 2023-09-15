@@ -1,7 +1,7 @@
 ---
 report_dir: "/tmp"
-tmp_dir: "/tmp"
-profile_os_name: "debian11"
+tmp_dir: "/tmp/ComplianceAsCode"
+os_profile: "debian12"
 deps:
   - wget
   - cmake
@@ -18,7 +18,6 @@ deps:
   - libxml2-dev
   - libldap2-dev
   - libpcre3-dev
-  - python-dev 
   - swig
   - libxml-parser-perl
   - libxml-xpath-perl
@@ -41,4 +40,4 @@ deps:
   - python3-openscap
 
 security_profile: xccdf_org.ssgproject.content_profile_standard
-ssg_file: "ssg-ubuntu2204-ds-1.2.xml"
+ssg_file: "ssg-debian12-ds-1.2.xml"

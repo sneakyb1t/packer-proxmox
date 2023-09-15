@@ -1,6 +1,6 @@
 ---
 report_dir: "/tmp"
-tmp_dir: "/tmp"
+tmp_dir: "/tmp/ComplianceAsCode"
 profile_os_name: "ubuntu2204"
 
 deps:
