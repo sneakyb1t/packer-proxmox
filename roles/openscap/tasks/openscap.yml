@@ -10,36 +10,31 @@
   with_items: 
     - "{{ deps }}"
 
-- name: Debug variables
-  debug:
-    msg:
-      - "is_ubuntu_22: {{ is_ubuntu_22 }}"
-      - "is_debian_11: {{ is_debian_11 }}"
-
 # clone ComplianceAsCode repo
 - name: Clone ComplianceAsCode repository
   git:
     repo: "https://github.com/ComplianceAsCode/content.git"
     dest: "{{ tmp_dir }}"
-  when: is_ubuntu_22 or is_debian_11
+  when: is_ubuntu_22 or is_debian_12
   
 - name: Make xccdf profile
   command:
     cmd: "{{ item }}"
     chdir: "{{ tmp_dir }}/content/build/"
-    loop:
+  loop:
     - "cmake ../"
-    - "make -j4 {{ profile_os_name }}"
-  when: is_ubuntu_22 or is_debian_11
+    - "make -j4 {{ os_profile }}"
+  when: is_ubuntu_22 or is_debian_12
   
 - name: Execute the remediation using standard profile
   command:
     cmd: "oscap xccdf eval --remediate --profile {{ security_profile }} --report {{ report_dir }}/oscap_report.html {{ ssg_file }}"
     chdir: "{{ tmp_dir }}/content/build/"
+  ignore_errors: yes
 
 - name: Remove ComplianceAsCode content folder
   file:
-    path: "{{ report_dir }}/content"
+    path: "{{ tmp_dir }}"
     state: absent
 
 - name: Cleanup installed packages

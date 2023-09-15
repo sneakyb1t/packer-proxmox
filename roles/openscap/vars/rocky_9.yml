@@ -1,43 +1,10 @@
 ---
 report_dir: "/tmp"
-tmp_dir: "/tmp"
-profile_os_name: "debian11"
+tmp_dir: "/tmp/ComplianceAsCode"
 deps:
-  - wget
-  - cmake
-  - libdbus-1-dev
-  - libdbus-glib-1-dev
-  - libcurl4-openssl-dev
-  - libgcrypt20-dev
-  - libselinux1-dev
-  - libxslt1-dev
-  - libgconf2-dev
-  - libacl1-dev
-  - libblkid-dev
-  - libcap-dev
-  - libxml2-dev
-  - libldap2-dev
-  - libpcre3-dev
-  - python-dev swig
-  - libxml-parser-perl
-  - libxml-xpath-perl
-  - libperl-dev
-  - libbz2-dev
-  - librpm-dev
-  - g++
-  - libapt-pkg-dev
-  - libyaml-dev
-  - libxmlsec1-dev
-  - libxmlsec1-openssl
-  - git
-  - make
-  - libxml2-utils
-  - python3-jinja2
-  - python3-yaml
-  - python3-setuptools
-  - xsltproc
-  - openscap-utils
-  - python3-openscap
+  - openscap 
+  - openscap-utils 
+  - scap-security-guide
 
-security_profile: xccdf_org.ssgproject.content_profile_standard
-ssg_file: "ssg-ubuntu2204-ds-1.2.xml"
+security_profile: xccdf_org.ssgproject.content_profile_anssi_bp28_minimal
+ssg_file: "ssg-rl9-ds-1.2.xml"
