@@ -4,6 +4,6 @@ is_debian_12: "{{ ansible_facts['distribution'] == 'Debian' and ansible_facts['d
 is_ubuntu_22: "{{ ansible_facts['distribution'] == 'Ubuntu' and ansible_facts['distribution_major_version'] == '22' }}"
 is_rocky_8: "{{ ansible_facts['distribution'] == 'Rocky' and ansible_facts['distribution_major_version'] == '8' }}"
 is_rocky_9: "{{ ansible_facts['distribution'] == 'Rocky' and ansible_facts['distribution_major_version'] == '9' }}"
-is_rhel_8: "{{ ansible_facts['distribution'] == 'Debian' and ansible_facts['distribution_major_version'] == '8' }}"
+is_rhel_8: "{{ ansible_facts['distribution'] == 'RedHat' and ansible_facts['distribution_major_version'] == '8' }}"
 is_rhel_9: "{{ ansible_facts['distribution'] == 'RedHat' and ansible_facts['distribution_major_version'] == '9' }}"
 is_coreos_38: "{{ ansible_facts['distribution'] == 'CoreOS' and ansible_facts['distribution_major_version'] == '38' }}"
