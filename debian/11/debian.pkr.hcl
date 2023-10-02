@@ -39,6 +39,8 @@ source "proxmox-iso" "debian11" {
   cores                    = var.vm_cores
   sockets                  = var.vm_sockets
   memory                   = var.vm_memory
+  cloud_init               = true
+  cloud_init_storage_pool  = var.proxmox_storage_pool
 
   network_adapters {
     model    = var.vm_net_iface_type
