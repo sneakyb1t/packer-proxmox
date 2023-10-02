@@ -10,6 +10,12 @@
   with_items: 
     - "{{ deps }}"
 
+- name: create temporary directory
+  ansible.builtin.file:
+    path: "{{ tmp_dir }}"
+    state: directory
+    mode: '0755'
+
 # clone ComplianceAsCode repo
 - name: Clone ComplianceAsCode repository
   git:
@@ -19,8 +25,8 @@
   
 - name: Make xccdf profile
   command:
-    cmd: "{{ item }}"
     chdir: "{{ tmp_dir }}/content/build/"
+    cmd: "{{ item }}"
   loop:
     - "cmake ../"
     - "make -j4 {{ os_profile }}"
