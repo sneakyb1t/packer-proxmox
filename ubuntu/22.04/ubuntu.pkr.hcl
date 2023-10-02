@@ -1,4 +1,5 @@
 source "proxmox-iso" "ubuntu22" {
+  http_interface = "utun5"
   boot_command = ["c",
     "<wait><wait><wait>linux /casper/vmlinuz --- autoinstall ds='nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/'",
     "<enter><wait>",
