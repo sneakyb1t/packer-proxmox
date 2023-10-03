@@ -77,8 +77,13 @@ build {
     source = "ubuntu/22.04/openscap.sh"
     destination = "~/openscap.sh"
   }
+
   provisioner "shell" {
     remote_folder = "~"
-    inline = ["while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done", "sudo bash ~/openscap.sh", "mkdir -p ~/.ssh", "echo '${var.vm_pubkey}' >> ~/.ssh/authorized_keys"]
+    inline = [
+      "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done",
+      "sudo bash ~/openscap.sh",
+      "sudo cloud-init clean"
+    ]
   }
 }
