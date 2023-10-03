@@ -78,7 +78,7 @@ variable "vm_hostname" {
   default = "debian11"
 }
 
-variable "vm_keyboard" {
+variable "vm_keyboard_deb" {
   type    = string
   default = "us"
 }

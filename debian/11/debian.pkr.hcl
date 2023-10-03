@@ -64,7 +64,7 @@ source "proxmox-iso" "debian11" {
       vm_password_encrypted = var.vm_password_encrypted
       vm_pubkey             = var.vm_pubkey
       vm_language           = var.vm_language
-      vm_keyboard           = var.vm_keyboard
+      vm_keyboard           = var.vm_keyboard_deb
       vm_timezone           = var.vm_timezone
       vm_locale             = var.vm_locale
       vm_country            = var.vm_country
