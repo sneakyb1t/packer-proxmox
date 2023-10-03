@@ -6,9 +6,15 @@ python_version=3.11.1
 tmp_dir="/tmp"
 
 # Define dependencies
+common_deps=(wget cmake make git python3-jinja2 python3-yaml python3-setuptools)
 build_deps=(build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev)
-openscap_deps=(wget cmake libdbus-1-dev libdbus-glib-1-dev libcurl4-openssl-dev libgcrypt20-dev libselinux1-dev libxslt1-dev libgconf2-dev libacl1-dev libblkid-dev libcap-dev libxml2-dev libldap2-dev libpcre3-dev python-dev swig libxml-parser-perl libxml-xpath-perl libperl-dev libbz2-dev librpm-dev g++ libapt-pkg-dev libyaml-dev libxmlsec1-dev libxmlsec1-openssl)
-complianceascode_deps=(git make libxml2-utils python3-jinja2 python3-yaml python3-setuptools xsltproc)
+openscap_deps=(libdbus-1-dev libdbus-glib-1-dev libcurl4-openssl-dev libgcrypt20-dev libselinux1-dev libxslt1-dev libgconf2-dev libacl1-dev libblkid-dev libcap-dev libxml2-dev libldap2-dev libpcre3-dev python-dev swig libxml-parser-perl libxml-xpath-perl libperl-dev libbz2-dev librpm-dev g++ libapt-pkg-dev libyaml-dev libxmlsec1-dev libxmlsec1-openssl)
+complianceascode_deps=(libxml2-utils xsltproc)
+
+install_common_deps() {
+    # Install some common dependencies
+    apt install -y ${common_deps}
+}
 
 install_python() {
     # Install Python
@@ -18,7 +24,6 @@ install_python() {
     cd Python-${python_version}/
 
     # Install build tools for Python
-    sudo apt update
     sudo apt install -y "${build_deps[@]}"
     ./configure --enable-optimizations
     make -j "$(nproc)"
@@ -28,7 +33,6 @@ install_python() {
 
 install_openscap() {
     # Install OpenSCAP dependencies
-    sudo apt-get update
     sudo apt-get install -y "${openscap_deps[@]}"
 
     # Build OpenSCAP from source code
@@ -68,7 +72,6 @@ run_oscap_xccdf() {
 cleanup() {
     # Cleanup
     # Remove installed packages except Python
-    sudo apt-mark hold sudo
     sudo apt-get purge -y "${build_deps[@]}" "${openscap_deps[@]}" "${complianceascode_deps[@]}"
     sudo apt-get autoremove -y
     sudo apt-get autoclean
@@ -80,6 +83,8 @@ cleanup() {
 }
 
 # Call functions
+sudo apt update
+install_common_deps
 install_python
 install_openscap
 install_complianceascode
