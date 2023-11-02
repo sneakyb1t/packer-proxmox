@@ -6,5 +6,5 @@ deps:
   - openscap-utils 
   - scap-security-guide
 
-security_profile: xccdf_org.ssgproject.content_profile_anssi_bp28_minimal
-ssg_file: "ssg-rl9-ds-1.2.xml"
+security_profile: "xccdf_org.ssgproject.content_profile_anssi_bp28_minimal"
+ssg_file: "ssg-rl9-ds.xml"

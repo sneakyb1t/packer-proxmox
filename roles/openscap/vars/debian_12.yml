@@ -32,8 +32,6 @@ deps:
   - git
   - make
   - libxml2-utils
-  - python3-jinja2
-  - python3-yaml
   - python3-setuptools
   - xsltproc
   - openscap-utils
