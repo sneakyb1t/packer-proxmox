@@ -20,33 +20,39 @@
 - name: Clone ComplianceAsCode repository
   git:
     repo: "https://github.com/ComplianceAsCode/content.git"
-    dest: "{{ tmp_dir }}"
+    dest: "/tmp/content"
   when: is_ubuntu_22 or is_debian_12
   
 - name: Make xccdf profile
   command:
-    chdir: "{{ tmp_dir }}/content/build/"
+    chdir: "/tmp/content/build/"
     cmd: "{{ item }}"
   loop:
     - "cmake ../"
     - "make -j4 {{ os_profile }}"
   when: is_ubuntu_22 or is_debian_12
+
+- name: Execute the remediation using standard profile
+  command:
+    cmd: "sudo oscap xccdf eval --remediate --profile {{ security_profile }} --report /tmp/oscap_report.html {{ ssg_file }}"
+  ignore_errors: yes`
+  when: is_rocky_9 or is_rocky_8 or is_rhel_8 or is_rhel_9
   
 - name: Execute the remediation using standard profile
   command:
-    cmd: "oscap xccdf eval --remediate --profile {{ security_profile }} --report {{ report_dir }}/oscap_report.html {{ ssg_file }}"
-    chdir: "{{ tmp_dir }}/content/build/"
-  ignore_errors: yes
+    cmd: "sudo oscap xccdf eval --remediate --profile {{ security_profile }} --report /tmp/oscap_report.html /usr/share/xml/scap/ssg/content/{{ ssg_file }}"
+  ignore_errors: yes`
+  when: is_rocky_9 or is_rocky_8 or is_rhel_8 or is_rhel_9
 
 - name: Remove ComplianceAsCode content folder
   file:
-    path: "{{ tmp_dir }}"
+    path: "/tmp/content"
     state: absent
+  when: is_ubuntu_22 or is_debian_12
 
 - name: Cleanup installed packages
-  apt:
+  ansible.builtin.package:
     name: "{{ item }}"
     state: absent
   with_items:
     - "{{ deps }}"
-  
