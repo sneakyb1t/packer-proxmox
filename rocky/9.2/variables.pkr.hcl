@@ -159,7 +159,7 @@ variable "vm_part_log_size" {
 
 variable "vm_part_usr_size" {
   type    = string
-  default = "3076"
+  default = "6076"
 }
 
 variable "vm_sockets" {

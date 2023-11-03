@@ -34,14 +34,15 @@
 
 - name: Execute the remediation using standard profile
   command:
+    chdir: "/tmp/content/build/"
     cmd: "sudo oscap xccdf eval --remediate --profile {{ security_profile }} --report /tmp/oscap_report.html {{ ssg_file }}"
-  ignore_errors: yes`
-  when: is_rocky_9 or is_rocky_8 or is_rhel_8 or is_rhel_9
+  ignore_errors: yes
+  when: is_ubuntu_22 or is_debian_12
   
 - name: Execute the remediation using standard profile
   command:
     cmd: "sudo oscap xccdf eval --remediate --profile {{ security_profile }} --report /tmp/oscap_report.html /usr/share/xml/scap/ssg/content/{{ ssg_file }}"
-  ignore_errors: yes`
+  ignore_errors: yes
   when: is_rocky_9 or is_rocky_8 or is_rhel_8 or is_rhel_9
 
 - name: Remove ComplianceAsCode content folder
