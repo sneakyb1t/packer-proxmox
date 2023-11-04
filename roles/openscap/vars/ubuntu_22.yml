@@ -10,9 +10,6 @@ deps:
 - libopenscap8 
 - libxml2-utils 
 - ninja-build 
-- python3-jinja2 
-- python3-yaml 
-- python3-setuptools 
 - xsltproc
 
 security_profile: xccdf_org.ssgproject.content_profile_standard
