@@ -41,7 +41,7 @@ source "proxmox-iso" "rocky9" {
   bios          = "ovmf"
 
   http_content = {
-    "/inst.ks" = templatefile("${abspath(path.root)}/http/inst.ks.hcl", {
+      "/inst.ks" = templatefile("${abspath(path.root)}/http/inst.ks.hcl", {
       vm_username              = var.vm_username
       vm_password              = var.vm_password
       vm_password_encrypted    = var.vm_password_encrypted
@@ -67,14 +67,18 @@ build {
   sources = ["source.proxmox-iso.rocky9"]
   provisioner "shell" {
     remote_folder = "~"
-    inline        = ["sudo yum update -y"," sudo yum upgrade -y", "sudo yum install ansible -y" ]
+    inline        = ["sudo yum update -y","sudo yum upgrade -y", "sudo yum install ansible -y" ]
   }
   provisioner "ansible-local" {
   playbook_file = "site.yml"
   role_paths = ["roles"]
+  extra_arguments = [
+    "--extra-vars",
+    "ANSIBLE_BECOME_PASS=${var.vm_root_password}"  
+    ]
   }
   provisioner "shell" {
     remote_folder = "~"
-    inline        = ["sudo yum remove ansible -y"]
+    inline        = ["echo ${var.vm_password} |sudo -S yum remove ansible -y"]
   }
 }

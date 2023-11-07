@@ -3,7 +3,7 @@
 # COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 # OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# Debian 11
+# Debian 12
 
 # Locale and Keyboard
 d-i debian-installer/locale string ${vm_locale}
@@ -11,6 +11,8 @@ d-i debian-installer/language string ${vm_language}
 d-i keyboard-configuration/xkb-keymap select ${vm_keyboard}
 d-i debian-installer/country string ${vm_country}
 d-i localechooser/supported-locales multiselect en_US.UTF-8
+
+
 
 # Clock and Timezone
 d-i clock-setup/utc boolean true
@@ -131,9 +133,13 @@ d-i netcfg/choose_interface select auto
 d-i netcfg/get_hostname string unassigned-hostname
 d-i netcfg/get_domain string unassigned-domain
 
-# Mirror settings
+### Mirror settings
+# Mirror protocol:
+# If you select ftp, the mirror/country string does not need to be set.
+# Default value for the mirror protocol: http.
+#d-i mirror/protocol string ftp
 d-i mirror/country string manual
-d-i mirror/http/hostname string deb.debian.org
+d-i mirror/http/hostname string http.us.debian.org
 d-i mirror/http/directory string /debian
 d-i mirror/http/proxy string
 
