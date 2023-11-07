@@ -57,3 +57,4 @@
     state: absent
   with_items:
     - "{{ deps }}"
+  when: is_ubuntu_22 or is_debian_12

@@ -75,6 +75,6 @@ build {
   }
   provisioner "shell" {
     remote_folder = "~"
-    inline        = ["sudo yum remove ansible -y"]
+    inline        = ["echo ${var.vm_password} |sudo -S yum remove ansible -y"]
   }
 }
