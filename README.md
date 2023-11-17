@@ -8,7 +8,8 @@ Prerequisites
 =============
 
 - Packer 1.8.6+ installed on your system
-- A Proxmox environment running version 7.X
+- A Proxmox environment running version 7.X 8.x
+- A user that has sufficient privileges to create the needed ressources
 
 ```
 packer init require.pkr.hcl
@@ -22,7 +23,7 @@ To install Packer on other Linux distributions, please follow the official insta
 Usage
 =====
 
-1. Copy the example common variables file and fill it with your specific variables:
+1. Copy the example common variables file and fill it in with your specific variables:
 
 ```
 cp common.pkrvars.hcl{.example,}
@@ -58,7 +59,9 @@ packer build -var-file=common.pkrvars.hcl rhel/8.7
 Customization
 =============
 
-You can customize your template by adding missing values to `variables.hcl` or `distro.hcl`, or you can override any of the values in `variables.hcl` by editing the `common.pkrvars.hcl` file. Editing variables in this file will override any default values. In most common cases, you will just need to uncomment the variables needed in the `common.pkrvars.hcl` file and use your own values.
+You can customize your template by adding missing values to `variables.hcl` or `distro.hcl`, or you can override any of the values in `variables.hcl` by editing the `common.pkrvars.hcl` file.
+Editing variables in this file will override any default values. 
+In most common cases, you will just need to uncomment the variables needed in the `common.pkrvars.hcl` file and use your own values.
 
 You can use the `--debug` option in Packer to interactively check what's going on during provision along with `PACKER_LOG=1` variable to get more verbose logging.
 
@@ -67,6 +70,13 @@ To enable debug logging, run:
 ```
 PACKER_LOG=1 packer build -debug -var-file=common.pkrvars.hcl rocky/9.1
 ```
+
+Ansible provisioning
+=============
+One of the steps of template preparation is by using ansible roles.
+openscap role is provided as an exemple.
+Feel free to fill in with your custom roles
+
 
 Specific OS requirements
 =============
