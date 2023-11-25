@@ -63,13 +63,22 @@ source "proxmox-iso" "rhel8" {
 
 build {
   sources = ["source.proxmox-iso.rhel8"]
-  provisioner "file" {
-    source = "rhel/8.7/openscap.sh"
-    destination = "~/openscap.sh"
-}
-
   provisioner "shell" {
     remote_folder = "~"
-    inline = ["sudo bash ~/openscap.sh", "mkdir -p ~/.ssh", "echo '${var.vm_pubkey}' >> ~/.ssh/authorized_keys"]
+    inline = ["sudo subscription-manager register --username $(var.redhat_subscription_username) --password $(var.redhat_subscription_password)"]
   }
+  provisioner "ansible-local" {
+  playbook_file = "site.yml"
+  role_paths = ["roles"]
+  extra_arguments = [
+    "--extra-vars",
+    "ANSIBLE_BECOME_PASS=${var.vm_password}"
+    ]
+
+  }
+  provisioner "shell" {
+    remote_folder = "~"
+    inline        = ["echo ${var.vm_password} |sudo -S yum remove ansible -y"]
+  }
+
 }
