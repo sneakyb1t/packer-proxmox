@@ -27,7 +27,7 @@
         "mode": 420
       },
       {
-        "path": "/home/core/Dockerfile",
+        "path": "/home/packer/Dockerfile",
         "contents": {
           "compression": "",
           "source": "data:;base64,RlJPTSBhbHBpbmU6My4xOAoKUlVOIGFwayBhZGQgLS11cGRhdGUgLS1uby1jYWNoZSBxZW11LWd1ZXN0LWFnZW50CgpFTlRSWVBPSU5UIFsgIi91c3IvYmluL3FlbXUtZ2EiIF0KQ01EIFsiLW0iLCAidmlydGlvLXNlcmlhbCIsICItcCIsICIvZGV2L3ZpcnRpby1wb3J0cy9vcmcucWVtdS5ndWVzdF9hZ2VudC4wIl0K"
@@ -39,7 +39,7 @@
   "systemd": {
     "units": [
       {
-        "contents": "[Unit]\nDescription=Build and run QEMU guest agent\n[Service]\nType=oneshot\nRemainAfterExit=yes\nExecStart=docker run --rm -d --name qemu-ga -v /etc/os-release:/etc/os-release:ro --device /dev/virtio-ports/org.qemu.guest_agent.0:/dev/virtio-ports/org.qemu.guest_agent.0 --net=host --uts=host docker.io/danskadra/qemu-ga\n[Install]\nWantedBy=multi-user.target\n",
+        "contents": "[Unit]\nDescription=Build and run QEMU guest agent\n[Service]\nType=oneshot\nRemainAfterExit=yes\nExecStartPre=/usr/bin/docker build -t qemu-ga /home/packer\nExecStart=/usr/bin/docker run --rm -d --name qemu-ga -v /etc/os-release:/etc/os-release:ro --device /dev/virtio-ports/org.qemu.guest_agent.0:/dev/virtio-ports/org.qemu.guest_agent.0 --net=host --uts=host qemu-ga\n[Install]\nWantedBy=multi-user.target\n",
         "enabled": true,
         "name": "qemu-guest-agent.service"
       }

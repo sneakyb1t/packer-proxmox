@@ -4,7 +4,7 @@ passwd:
   users:
     - name: core
       ssh_authorized_keys:
-        - $SSH_PUB_KEY
+        - ${vm_pubkey}
       groups:
         - wheel
         - sudo
@@ -38,6 +38,8 @@ systemd:
         [Service]
         Type=oneshot
         RemainAfterExit=yes
-        ExecStart=docker run --rm -d --name qemu-ga -v /etc/os-release:/etc/os-release:ro --device /dev/virtio-ports/org.qemu.guest_agent.0:/dev/virtio-ports/org.qemu.guest_agent.0 --net=host --uts=host docker.io/danskadra/qemu-ga
+        ExecStartPre=/usr/bin/docker build -t qemu-ga /home/packer
+        ExecStart=/usr/bin/docker run --rm -d --name qemu-ga -v /etc/os-release:/etc/os-release:ro --device /dev/virtio-ports/org.qemu.guest_agent.0:/dev/virtio-ports/org.qemu.guest_agent.0 --net=host --uts=host my-qemu-ga
         [Install]
         WantedBy=multi-user.target
+
