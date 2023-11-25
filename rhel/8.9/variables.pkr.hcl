@@ -196,3 +196,10 @@ variable "vm_swap_size" {
   type    = number
   default = 2048
 }
+variable "redhat_subscription_username" {
+  type    = string
+}
+
+variable "redhat_subscription_password" {
+  type    = string
+}
