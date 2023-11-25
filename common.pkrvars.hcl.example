@@ -5,7 +5,6 @@ proxmox_username = "$PKR_VAR_proxmox_username"
 proxmox_password = "$PKR_VAR_proxmox_password"
 proxmox_datastore = "$PKR_VAR_proxmox_datastore"
 proxmox_storage_pool = "$PKR_VAR_proxmox_storage_pool"
-#proxmox_storage_pool_type = "lvm"
 #proxmox_scsi_controller = "virtio-scsi-pci"
 #proxmox_insecure = "true"
 
