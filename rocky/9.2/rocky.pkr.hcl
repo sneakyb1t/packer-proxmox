@@ -74,7 +74,7 @@ build {
   role_paths = ["roles"]
   extra_arguments = [
     "--extra-vars",
-    "ANSIBLE_BECOME_PASS=${var.vm_root_password}"  
+    "ANSIBLE_BECOME_PASS=${var.vm_password}"  
     ]
   }
   provisioner "shell" {
