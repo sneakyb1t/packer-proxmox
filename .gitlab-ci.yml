@@ -49,7 +49,7 @@ validate:
   - $RUNNER_TAG
   script:
     - find . -maxdepth 2 -mindepth 2 -type d -not -path "./.git/*" |
-      xargs -I {} bash -c "echo 'Validating {}' && packer validate -only=proxmox-iso -var-file=common-ci.pkrvars.hcl {}"
+      xargs -I {} bash -c "echo 'Validating {}' && packer validate -only=proxmox-iso* -var-file=common-ci.pkrvars.hcl {}"
   needs:
     - job: load_vars
 
