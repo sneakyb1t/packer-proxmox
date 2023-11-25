@@ -99,10 +99,10 @@ cp template.bu{.example,}
 ```
 Edit the installer.bu and template.bu
 
-Convert your butane configuration files to ignition format:
+Convert your butane configuration files to ignition format, make sure to include any packer variable needed in the butane file (like vm_pubkey for example):
 ```
-butane --pretty --strict installer.bu > installer.ign
-butane --pretty --strict template.bu > template.ign
+butane --pretty --strict installer.bu > installer.ign.hcl
+butane --pretty --strict template.bu > template.ign.hcl
 ```
 
 Or
