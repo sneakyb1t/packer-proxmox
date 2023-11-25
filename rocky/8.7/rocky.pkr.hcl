@@ -72,6 +72,11 @@ build {
   provisioner "ansible-local" {
   playbook_file = "site.yml"
   role_paths = ["roles"]
+  extra_arguments = [
+    "--extra-vars",
+    "ANSIBLE_BECOME_PASS=${var.vm_password}"  
+    ]
+
   }
   provisioner "shell" {
     remote_folder = "~"
