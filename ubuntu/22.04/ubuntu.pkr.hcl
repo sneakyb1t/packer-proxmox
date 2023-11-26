@@ -72,12 +72,6 @@ source "proxmox-iso" "ubuntu22" {
 
 build {
   sources = ["source.proxmox-iso.ubuntu22"]
-
-  provisioner "file" {
-    source = "ubuntu/22.04/openscap.sh"
-    destination = "~/openscap.sh"
-  }
-
   provisioner "shell" {
     remote_folder = "~"
     inline = [
@@ -85,5 +79,16 @@ build {
       "sudo bash ~/openscap.sh",
       "sudo cloud-init clean"
     ]
+  provisioner "shell" {
+    remote_folder = "~"
+    inline        = ["sudo apt-get update -y"," sudo apt-get upgrade -y", "sudo apt install ansible -y" ]
+  }
+  provisioner "ansible-local" {
+  playbook_file = "site.yml"
+  role_paths = ["roles"]
+  }
+  provisioner "shell" {
+    remote_folder = "~"
+    inline        = ["sudo apt remove ansible -y"]
   }
 }

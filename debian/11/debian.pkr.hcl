@@ -87,9 +87,13 @@ source "proxmox-iso" "debian11" {
 
 build {
   sources = ["source.proxmox-iso.debian11"]
-  provisioner "file" {
-    source      = "debian/11/openscap.sh"
-    destination = "~/openscap.sh"
+  provisioner "shell" {
+    remote_folder = "~"
+    inline        = ["sudo apt-get update -y"," sudo apt-get upgrade -y", "sudo apt install ansible python3-pip git -y", "sudo pip3 install jinja2" ]
+  }
+  provisioner "ansible-local" {
+  playbook_file = "site.yml"
+  role_paths = ["roles"]
   }
   provisioner "shell" {
     remote_folder = "~"
@@ -100,6 +104,6 @@ build {
       "mkdir -p ~/.ssh",
       "echo '${var.vm_pubkey}' >> ~/.ssh/authorized_keys",
       "sudo cloud-init clean"
-      ]
+      "sudo apt remove ansible -y"]
   }
 }
