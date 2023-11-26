@@ -1,0 +1,20 @@
+---
+report_dir: "/tmp"
+tmp_dir: "/tmp/security"
+profile_os_name: "ubuntu2204"
+
+deps:
+- git 
+- cmake 
+- make 
+- libopenscap8 
+- libxml2-utils 
+- ninja-build 
+- python3-jinja2 
+- python3-yaml 
+- python3-setuptools 
+- xsltproc
+
+security_profile: xccdf_org.ssgproject.content_profile_standard
+
+ssg_file: "ssg-ubuntu2204-ds-1.2.xml"

@@ -1,0 +1,53 @@
+---
+- name: Update packages cache
+  ansible.builtin.package:
+    update_cache: yes
+
+- name: Add the Debian repository
+  become: yes
+  ansible.builtin.apt_repository:
+    repo: "deb https://httpredir.debian.org/ debian main"
+    state: present
+  when: is_debian_11
+
+- name: install dependencies
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  with_items: 
+    - "{{ deps }}"
+
+
+# clone ComplianceAsCode repo
+- name: Clone ComplianceAsCode repository
+  git:
+    repo: "https://github.com/ComplianceAsCode/content.git"
+    dest: "{{ tmp_dir }}"
+  when: is_ubuntu_22 or is_debian_11
+  
+- name: Make xccdf profile
+  command:
+    cmd: "{{ item }}"
+    chdir: "{{ tmp_dir }}/content/build/"
+    loop:
+    - "cmake ../"
+    - "make -j4 {{ profile_os_name }}"
+  when: is_ubuntu_22 or is_debian_11
+  
+- name: Execute the remediation using standard profile
+  command:
+    cmd: "oscap xccdf eval --remediate --profile {{ security_profile }} --report {{ report_dir }}/oscap_report.html {{ ssg_file }}"
+    chdir: "{{ report_dir }}/content/build/"
+
+- name: Remove ComplianceAsCode content folder
+  file:
+    path: "{{ report_dir }}/content"
+    state: absent
+
+- name: Cleanup installed packages
+  apt:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - "{{ deps }}"
+  

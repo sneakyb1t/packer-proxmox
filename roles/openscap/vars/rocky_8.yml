@@ -1,0 +1,11 @@
+---
+report_dir: "/tmp"
+tmp_dir: "/tmp"
+profile_os_name: "debian11"
+deps:
+  - openscap-utils
+  - openscap
+  - openscap-security-guide
+
+security_profile: xccdf_org.ssgproject.content_profile_anssi_bp28_minimal
+ssg_file: "/usr/share/xml/scap/ssg/content/ssg-rl8-ds-1.2.xml"

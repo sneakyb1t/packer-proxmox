@@ -1,0 +1,26 @@
+---
+# tasks file for openscap
+
+- include_vars: debian_11.yml
+  when: ansible_facts['distribution'] == 'Debian' and ansible_facts['distribution_major_version'] == '11'
+
+- include_vars: ubuntu_22.yml
+  when: ansible_facts['distribution'] == 'Ubuntu' and ansible_facts['distribution_major_version'] == '22'
+
+- include_vars: rocky_8.yml
+  when: ansible_facts['distribution'] == 'Rocky' and ansible_facts['distribution_major_version'] == '8'
+
+- include_vars: rhel_8.yml
+  when: ansible_facts['distribution'] == 'RedHat' and ansible_facts['distribution_major_version'] == '8'
+
+- include_vars: rocky_9.yml
+  when: ansible_facts['distribution'] == 'Rocky' and ansible_facts['distribution_major_version'] == '9'
+
+- include_vars: rhel_9.yml
+  when: ansible_facts['distribution'] == 'RedHat' and ansible_facts['distribution_major_version'] == '9'
+
+- include_vars: coreos_38.yml
+  when: ansible_facts['distribution'] == 'CoreOS' and ansible_facts['distribution_major_version'] == '38'
+
+- name: Include openscap install tasks
+  ansible.builtin.include_tasks: openscap.yml

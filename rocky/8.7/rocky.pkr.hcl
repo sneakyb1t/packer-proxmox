@@ -65,13 +65,16 @@ source "proxmox-iso" "rocky8" {
 
 build {
   sources = ["source.proxmox-iso.rocky8"]
-  provisioner "file" {
-    source = "rocky/8.7/openscap.sh"
-    destination = "~/openscap.sh"
-}
-
   provisioner "shell" {
     remote_folder = "~"
-    inline = ["sudo bash ~/openscap.sh", "mkdir -p ~/.ssh", "echo '${var.vm_pubkey}' >> ~/.ssh/authorized_keys"]
+    inline        = ["sudo yum update -y"," sudo yum upgrade -y", "sudo yum install ansible -y" ]
+  }
+  provisioner "ansible-local" {
+  playbook_file = "site.yml"
+  role_paths = ["roles"]
+  }
+  provisioner "shell" {
+    remote_folder = "~"
+    inline        = ["sudo yum remove ansible -y"]
   }
 }
