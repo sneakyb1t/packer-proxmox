@@ -109,7 +109,7 @@ variable "vm_memory" {
 
 variable "vm_disk_size" {
   type = string
-  default = "30G"
+  default = "15360M"
 }
 
 variable "vm_disk_type" {
