@@ -65,10 +65,10 @@ build {
   sources = ["source.proxmox-iso.rhel8"]
   provisioner "shell" {
     remote_folder = "~"
-    inline = ["sudo subscription-manager register --username ${var.redhat_subscription_username} --password ${var.redhat_subscription_password} "]
+    inline = ["sudo subscription-manager register --username ${var.redhat_subscription_username} --password ${var.redhat_subscription_password}"]
   }
   provisioner "shell" {
-    inline = ["sudo yum update -y && sudo yum install ansible -y "]
+    inline = ["sudo subscription-manager repos --enable codeready-builder-for-rhel-9-$(arch)-rpms &&  sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && sudo dnf install ansible -y "]
   }
   provisioner "ansible-local" {
   playbook_file = "site.yml"

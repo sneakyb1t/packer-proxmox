@@ -80,7 +80,7 @@ volgroup sys --pesize=4096 pv.01
 ### Modify logical volume sizes for the virtual machine hardware.
 ### Create logical volumes.
 logvol / --fstype ${vm_fs_type} --name=root --vgname=sys --size=${vm_part_root_size} --label=ROOTFS
-logvol /tmp --fstype ${vm_fs_type} --name=tmp --vgname=sys --size=${vm_part_tmp_size} --label=TMPFS --fsoptions="nodev,noexec,nosuid"
+logvol /tmp --fstype ${vm_fs_type} --name=tmp --vgname=sys --size=${vm_part_tmp_size} --label=TMPFS --fsoptions="nodev,nosuid"
 logvol /var --fstype ${vm_fs_type} --name=var --vgname=sys --size=${vm_part_var_size} --label=VARFS --fsoptions="nodev"
 logvol /var/log --fstype ${vm_fs_type} --name=log --vgname=sys --size=${vm_part_log_size} --label=LOGFS --fsoptions="nodev,noexec,nosuid"
 logvol /usr --fstype ${vm_fs_type} --name=usr --vgname=sys --size=${vm_part_usr_size} --label=USRFS --fsoptions="nodev"
