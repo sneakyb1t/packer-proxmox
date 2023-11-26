@@ -1,11 +1,8 @@
 #!/bin/bash
 
-#Install openscap scanner and security guide
+#Install upgrade and install ansible
 sudo dnf update
-sudo dnf install openscap openscap-utils scap-security-guide
+sudo dnf upgrade
+sudo dnf install ansible
 
-# Execute the remediation using the profile and generate a report
-sudo oscap xccdf eval --profile xccdf_org.ssgproject.content_profile_anssi_bp28_minimal \
-/usr/share/xml/scap/ssg/content/ssg-rhel8-ds.xml
 
-exit 0
