@@ -65,7 +65,10 @@ build {
   sources = ["source.proxmox-iso.rhel9"]
   provisioner "shell" {
     remote_folder = "~"
-    inline = ["sudo subscription-manager register --username $(var.redhat_subscription_username) --password $(var.redhat_subscription_password)"]
+    inline = ["sudo subscription-manager register --username ${var.redhat_subscription_username} --password ${var.redhat_subscription_password}"]
+  }
+  provisioner "shell" {
+    inline = ["sudo yum update -y && sudo yum install ansible -y "]
   }
   provisioner "ansible-local" {
   playbook_file = "site.yml"

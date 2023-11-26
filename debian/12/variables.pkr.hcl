@@ -211,3 +211,6 @@ variable "timeout" {
 variable "iso_checksum" {
   type    = string
 }
+variable "openscap_hardening" {
+  type    = string
+}
