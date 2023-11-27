@@ -203,7 +203,4 @@ variable "vm_swap_size" {
 }
 variable "iso_checksum" {
   type    = string
-} 
-variable "vm_root_password_hashed" {
-  type    = string
 }
