@@ -79,6 +79,7 @@ build {
       "sudo bash ~/openscap.sh",
       "sudo cloud-init clean"
     ]
+  }
   provisioner "shell" {
     remote_folder = "~"
     inline        = ["sudo apt-get update -y"," sudo apt-get upgrade -y", "sudo apt install ansible -y" ]
@@ -88,7 +89,7 @@ build {
   role_paths = ["roles"]
   extra_arguments = [
     "--extra-vars",
-    "ANSIBLE_BECOME_PASS=${var.vm_password}"     
+    "ANSIBLE_BECOME_PASS=${var.vm_password}"
     ]
   }
   provisioner "shell" {
