@@ -32,11 +32,15 @@ autoinstall:
     # LV for log
     - { name: log, volgroup: lvm_volgroup-0, size: ${vm_part_log_size}, wipe: superblock, preserve: false, type: lvm_partition, id: lvm_partition-3 }
     - { fstype: ${vm_fs_type}, volume: lvm_partition-3, preserve: false, type: format, id: format-5 }
-    # LV for usr
-    - { name: usr, volgroup: lvm_volgroup-0, size: ${vm_part_usr_size}, wipe: superblock, preserve: false, type: lvm_partition, id: lvm_partition-4 }
+    # LV for home
+    - { name: home, volgroup: lvm_volgroup-0, size: ${vm_part_home_size}, wipe: superblock, preserve: false, type: lvm_partition, id: lvm_partition-4 }
     - { fstype: ${vm_fs_type}, volume: lvm_partition-4, preserve: false, type: format, id: format-6 }
+    # LV for usr
+    - { name: usr, volgroup: lvm_volgroup-0, size: ${vm_part_usr_size}, wipe: superblock, preserve: false, type: lvm_partition, id: lvm_partition-5 }
+    - { fstype: ${vm_fs_type}, volume: lvm_partition-5, preserve: false, type: format, id: format-7 }
     # Mount points
-    - { path: /usr, device: format-6, type: mount, id: mount-6 }
+    - { path: /usr, device: format-7, type: mount, id: mount-7 }
+    - { path: /home, device: format-6, type: mount, id: mount-6 }
     - { path: /var/log, device: format-5, type: mount, id: mount-5 }
     - { path: /var, device: format-4, type: mount, id: mount-4 }
     - { path: /tmp, device: format-3, type: mount, id: mount-3 }
