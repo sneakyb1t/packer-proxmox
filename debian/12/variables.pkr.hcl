@@ -174,6 +174,11 @@ variable "vm_part_swap_size" {
   default = 1024
 }
 
+variable "vm_part_home_size" {
+  type    = number
+  default = 1024
+}
+
 variable "vm_part_usr_size" {
   type    = number
   default = 6144
