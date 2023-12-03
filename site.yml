@@ -5,4 +5,4 @@
   vars:
     openscap_hardening: false
   roles:
-    - { role: openscap, when: openscap_hardening|bool == true }
+    - { role: roles/openscap, when: openscap_hardening|bool == true }
