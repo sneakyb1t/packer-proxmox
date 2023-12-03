@@ -50,11 +50,12 @@ vm_password_encrypted = ""
 3. Build a template :
 
 ```
-packer build -var-file=common.pkrvars.hcl ubuntu/22.04
-packer build -var-file=common.pkrvars.hcl rocky/9.1
-packer build -var-file=common.pkrvars.hcl debian/11
-packer build -var-file=common.pkrvars.hcl rhel/8.7
+packer build -force -var-file=common.pkrvars.hcl ubuntu/22.04
+packer build -force -var-file=common.pkrvars.hcl rocky/9.1
+packer build -force -var-file=common.pkrvars.hcl debian/11
+packer build -force -var-file=common.pkrvars.hcl rhel/8.7
 ```
+The flag -force will override the previously created template once the build is finished, each os has it's own value configured in variable proxmox_vm_id in *.auto.pkrvars.hcl files 
 
 Customization
 =============
