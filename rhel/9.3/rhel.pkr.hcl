@@ -68,6 +68,7 @@ source "proxmox-iso" "rhel9" {
       vm_part_tmp_size         = var.vm_part_tmp_size
       vm_part_var_size         = var.vm_part_var_size
       vm_part_log_size         = var.vm_part_log_size
+      vm_part_home_size        = var.vm_part_home_size
       vm_part_usr_size         = var.vm_part_usr_size
       vm_swap_size             = var.vm_swap_size
     })
