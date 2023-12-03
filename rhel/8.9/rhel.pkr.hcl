@@ -75,17 +75,15 @@ build {
     remote_folder = "~"
     inline = ["sudo yum update -y  && sudo yum upgrade -y  && sudo dnf install ansible -y "]
   }
-
   provisioner "ansible-local" {
   playbook_file = "site.yml"
   role_paths = ["roles"]
   extra_arguments = [
     "--extra-vars",
-    "ANSIBLE_BECOME_PASS=${var.vm_password}",     
+    "ANSIBLE_BECOME_PASS=${var.vm_password}",
     "--extra-vars",
     "openscap_hardening=${var.openscap_hardening}"
     ]
-
   }
   provisioner "shell" {
     remote_folder = "~"
