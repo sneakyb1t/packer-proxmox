@@ -16,5 +16,5 @@
 
 - name: Include openscap install tasks
   ansible.builtin.include_tasks: openscap.yml
-  when: openscap_hardening == "true"
+  when: openscap_hardening == true
 
