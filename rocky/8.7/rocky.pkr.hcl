@@ -78,7 +78,6 @@ build {
     "--extra-vars",
     "openscap_hardening=${var.openscap_hardening}"
     ]
-
   }
   provisioner "shell" {
     remote_folder = "~"

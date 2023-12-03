@@ -203,4 +203,6 @@ variable "redhat_subscription_username" {
 variable "redhat_subscription_password" {
   type    = string
 } 
-
+variable "openscap_hardening" {
+  type    = string
+}

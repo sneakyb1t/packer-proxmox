@@ -68,20 +68,27 @@ build {
     inline = ["sudo subscription-manager register --username ${var.redhat_subscription_username} --password ${var.redhat_subscription_password}"]
   }
   provisioner "shell" {
-    inline = ["sudo yum update -y && sudo yum install ansible -y "]
+    remote_folder = "~"
+    inline = ["sudo subscription-manager repos --enable codeready-builder-for-rhel-9-$(arch)-rpms && sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm"]
   }
+  provisioner "shell" {
+    remote_folder = "~"
+    inline = ["sudo yum update -y  && sudo yum upgrade -y  && sudo dnf install ansible -y "]
+  }
+
   provisioner "ansible-local" {
   playbook_file = "site.yml"
   role_paths = ["roles"]
   extra_arguments = [
     "--extra-vars",
-    "ANSIBLE_BECOME_PASS=${var.vm_password}"
+    "ANSIBLE_BECOME_PASS=${var.vm_password}",     
+    "--extra-vars",
+    "openscap_hardening=${var.openscap_hardening}"
     ]
 
   }
   provisioner "shell" {
     remote_folder = "~"
-    inline        = ["echo ${var.vm_password} |sudo -S yum remove ansible -y"]
+    inline        = ["echo ${var.vm_password} |sudo -S dnf remove ansible -y"]
   }
-
 }

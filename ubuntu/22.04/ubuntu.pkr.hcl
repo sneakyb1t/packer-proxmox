@@ -92,7 +92,6 @@ build {
     "ANSIBLE_BECOME_PASS=${var.vm_password}",
     "--extra-vars",
     "openscap_hardening=${var.openscap_hardening}"
-
     ]
   }
   provisioner "shell" {
