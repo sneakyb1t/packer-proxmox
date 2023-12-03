@@ -77,6 +77,7 @@ Ansible provisioning
 One of the steps of template preparation is by using ansible roles.
 openscap role is provided as an exemple.
 Feel free to fill in with your custom roles
+To harden the template using openscap remediations you should define openscap_hardening variable=true in common.pkr.hcl
 
 
 Specific OS requirements
