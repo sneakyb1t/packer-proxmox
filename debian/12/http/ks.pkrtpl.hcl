@@ -111,6 +111,17 @@ d-i partman-auto/expert_recipe string                                           
     options/noexec{ noexec }                                                       \
     options/nosuid{ nosuid }                                                       \
     .                                                                              \
+    ${vm_part_home_size} ${vm_part_home_size} ${vm_part_home_size} ${vm_fs_type}   \
+    $lvmok{ }                                                                      \
+    mountpoint{ /home }                                                            \
+    lv_name{ home }                                                                \
+    in_vg { sys }                                                                  \
+    method{ format }                                                               \
+    format{ }                                                                      \
+    use_filesystem{ }                                                              \
+    filesystem{ ${vm_fs_type} }                                                    \
+    label { HOMEFS }                                                               \
+    .                                                                              \
     ${vm_part_usr_size} ${vm_part_usr_size} ${vm_part_usr_size} ${vm_fs_type}      \
     $lvmok{ }                                                                      \
     mountpoint{ /usr }                                                             \
