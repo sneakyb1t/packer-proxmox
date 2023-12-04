@@ -50,20 +50,23 @@ vm_password_encrypted = ""
 3. Build a template :
 
 ```
-packer build -force -var-file=common.pkrvars.hcl ubuntu/22.04
-packer build -force -var-file=common.pkrvars.hcl rocky/9.1
-packer build -force -var-file=common.pkrvars.hcl debian/11
-packer build -force -var-file=common.pkrvars.hcl rhel/8.7
+packer build -force -var-file=common.pkrvars.hcl ubuntu/22.x
+packer build -force -var-file=common.pkrvars.hcl rocky/9.x
+packer build -force -var-file=common.pkrvars.hcl debian/12
+packer build -force -var-file=common.pkrvars.hcl rhel/9.x
 ```
 The flag -force will override the previously created template once the build is finished, each os has it's own value configured in variable proxmox_vm_id in *.auto.pkrvars.hcl files 
 
 Customization
 =============
 
-You can customize your template by adding missing values to `variables.hcl` or `distro.hcl`, or you can override any of the values in `variables.hcl` by editing the `common.pkrvars.hcl` file.
+You can customize your template by adding missing values to `variables.hcl` or `distribution-family.hcl`, or you can override any of the values in `variables.hcl` by editing the `common.pkrvars.hcl` file.
 Editing variables in this file will override any default values. 
 In most common cases, you will just need to uncomment the variables needed in the `common.pkrvars.hcl` file and use your own values.
 
+
+Debugging
+============
 You can use the `--debug` option in Packer to interactively check what's going on during provision along with `PACKER_LOG=1` variable to get more verbose logging.
 To enable debug logging, run:
 
@@ -71,48 +74,12 @@ To enable debug logging, run:
 PACKER_LOG=1 packer build -debug -var-file=common.pkrvars.hcl rocky/9.1
 ```
 
+OS specific instructions
+============
+Each os family has it's specific Readme files for any eventual additional instructions
+
 Ansible provisioning
-=============
-One of the steps of template preparation is by using ansible roles.
-openscap role is provided as an exemple.
-Feel free to fill in with your custom roles
-To harden the template using openscap remediations you should define openscap_hardening variable=true in common.pkr.hcl
-
-
-Specific OS requirements
-=============
-CoreOS
-
-In order to build a CoreOS template you can simply include your ssh public key in the provided ignition configuration files.
-
-You can use the pregenerated ignition files in this project or you can generate your own configuration :
-
-- Convert the example butane files provided in this repo and convert it to ignition files
-
-install butane:
-https://coreos.github.io/butane/getting-started/
-
-
-```
-cd coreos/38/config
-cp installer.bu{.example,}
-cp template.bu{.example,}
-```
-Edit the installer.bu and template.bu
-
-Convert your butane configuration files to ignition format, make sure to include any packer variable needed in the butane file (like vm_pubkey for example):
-```
-butane --pretty --strict installer.bu > installer.ign.hcl
-butane --pretty --strict template.bu > template.ign.hcl
-```
-
-Or
-
-- Create ignition files manually https://docs.fedoraproject.org/en-US/fedora-coreos/producing-ign/
-
-Then
-
-build coreos template
-```
-packer build -var-file=common.pkrvars.hcl coreos/38
-```
+============
+To extend further the customization of your templates you can use ansible roles/playbooks, in this projetc we provide an openscap role to improove verall security of the template.
+Changing the value of "openscap_hardening" to true the role will execute all openscap remediations for the template you are building.
+You can find additional details on the ansible role in the role documentation
