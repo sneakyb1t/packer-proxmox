@@ -18,7 +18,7 @@ none
 
 Example Playbook
 ----------------
-This role is used via ansible-local plugin in packer deployment, could be used outside this scope, here an exemple of playbook
+This role is used via ansible-local plugin in packer deployment, could be used with ansible plugin (not tested yet), here an exemple of playbook
 
 - hosts: localhost
   become: yes
