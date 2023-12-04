@@ -1,3 +1,12 @@
+packer {
+  required_plugins {
+    proxmox = {
+      version = ">= 1.1.3"
+      source  = "github.com/hashicorp/proxmox"
+    }
+  }
+  required_version = ">= v1.9.4"
+}
 source "proxmox-iso" "coreos" {
   boot_wait    = "15s"
   boot_command = ["<up>e<down><down><end> ignition.config.url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/installer.ign<leftCtrlOn>x<leftCtrlOff>"]
