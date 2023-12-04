@@ -208,6 +208,3 @@ variable "vm_swap_size" {
 variable "iso_checksum" {
   type    = string
 }
-variable "openscap_hardening" {
-  type    = string
-}
