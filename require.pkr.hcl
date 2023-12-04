@@ -5,5 +5,5 @@ packer {
       source  = "github.com/hashicorp/proxmox"
     }
   }
-  required_version = ">= 1.8.6"
+  required_version = ">= v1.9.4"
 }
