@@ -74,10 +74,9 @@ build {
   role_paths = ["roles"]
   extra_arguments = [
     "--extra-vars",
-    "ANSIBLE_BECOME_PASS=${var.vm_password}",
-    "--extra-vars",
-    "openscap_hardening=${var.openscap_hardening}"
+    "ANSIBLE_BECOME_PASS=${var.vm_password}"  
     ]
+
   }
   provisioner "shell" {
     remote_folder = "~"

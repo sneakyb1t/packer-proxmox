@@ -92,6 +92,7 @@ You can use the pregenerated ignition files in this project or you can generate 
 install butane:
 https://coreos.github.io/butane/getting-started/
 
+
 ```
 cd coreos/38/config
 cp installer.bu{.example,}
