@@ -1,3 +1,13 @@
+packer {
+  required_plugins {
+    proxmox = {
+      version = ">= 1.1.3"
+      source  = "github.com/hashicorp/proxmox"
+    }
+  }
+  required_version = ">= v1.9.4"
+}
+
 source "proxmox-iso" "ubuntu22" {
   boot_command = ["c",
     "<wait><wait><wait>linux /casper/vmlinuz --- autoinstall ds='nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/'",
