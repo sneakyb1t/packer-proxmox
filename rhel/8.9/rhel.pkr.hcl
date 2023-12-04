@@ -1,3 +1,12 @@
+packer {
+  required_plugins {
+    proxmox = {
+      version = ">= 1.1.3"
+      source  = "github.com/hashicorp/proxmox"
+    }
+  }
+  required_version = ">= v1.9.4"
+}
 source "proxmox-iso" "rhel8" {
   boot_command = ["e<down><down><end><bs><bs><bs><bs><bs>inst.text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/inst.ks<leftCtrlOn>x<leftCtrlOff>"]
   boot_wait    = var.boot_wait
