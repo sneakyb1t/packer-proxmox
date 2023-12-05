@@ -80,12 +80,12 @@ Each os family has it's specific Readme files for any eventual additional instru
 
 Ansible provisioning
 ============
-To extend further the customization of your templates you can use ansible roles/playbooks, in this projetc we provide an openscap role to improove verall security of the template.
-Changing the value of "openscap_hardening" to true the role will execute all openscap remediations for the template you are building.
-You can find additional details on the ansible role in the role documentation
+To extend further the customization of your templates you can use ansible roles/playbooks, in this projetc we provide an openscap role to improve verall security of the template.
+Changing the value of "openscap_hardening" to true will execute all openscap remediations for the template you are building via ansible role openscap.
+You can find additional details on the ansible role in the role documentation.
 
 Contributing
 ===========
-If you think you've found a bug in this project or you have a question regarding the usage of this software , please reach out to us by opening an issue in this GitHub/Gitlab repository.
+If you think you've found a bug  or you have a question regarding the usage of this software , please reach out to us by opening an issue in this GitHub/Gitlab repository.
 Contributions to this project are welcome: if you want to add a feature or a fix a bug, please do so by opening a Pull Request in this GitHub/Gitlab repository. 
 In case of feature contribution, please open an issue to discuss it beforehand.
