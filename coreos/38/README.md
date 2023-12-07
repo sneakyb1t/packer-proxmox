@@ -1,5 +1,5 @@
 CoreOS
-=============
+======
 
 Use pre-generated ignition files
 --------------------------------
@@ -12,7 +12,9 @@ Generate your own ignition files
 --------------------------------
 
 > You'll need to install **butane** if you want to easily generate ignition files.
+>
 > Here's the "Getting Started" link : https://coreos.github.io/butane/getting-started/
+>
 > If you don't want to use butane, check [this link](https://docs.fedoraproject.org/en-US/fedora-coreos/producing-ign/)
 
 - Copy the provided butane example files
@@ -33,7 +35,6 @@ butane --pretty --strict template.bu > template.ign.hcl
 ```
 
 > make sure to include any packer variable needed in the butane file (like vm_pubkey for example)
-Or
 
 Build template
 --------------
