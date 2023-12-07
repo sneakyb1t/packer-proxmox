@@ -6,8 +6,6 @@ Use pre-generated ignition files
 
 In order to build a CoreOS template you can simply include your ssh public key in the provided ignition configuration files.
 
-REMOVE: You can use the pregenerated ignition files in this project or you can generate your own configuration :
-
 Generate your own ignition files
 --------------------------------
 
