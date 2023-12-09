@@ -59,7 +59,6 @@ The flag -force will override the previously created template once the build is 
 
 Customization
 =============
-
 You can customize your template by adding missing values to `variables.hcl` or `distro.hcl`, or you can override any of the values in `variables.hcl` by editing the `common.pkrvars.hcl` file.
 Editing variables in this file will override any default values. 
 In most common cases, you will just need to uncomment the variables needed in the `common.pkrvars.hcl` file and use your own values.
