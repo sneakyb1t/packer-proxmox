@@ -64,7 +64,6 @@ Editing variables in this file will override any default values.
 In most common cases, you will just need to uncomment the variables needed in the `common.pkrvars.hcl` file and use your own values.
 
 You can use the `--debug` option in Packer to interactively check what's going on during provision along with `PACKER_LOG=1` variable to get more verbose logging.
-
 To enable debug logging, run:
 
 ```
