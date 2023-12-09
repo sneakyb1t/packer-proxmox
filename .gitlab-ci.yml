@@ -24,10 +24,10 @@ workflow:
     - if: '$CI_COMMIT_BRANCH || $CI_COMMIT_TAG || $CI_OPEN_MERGE_REQUESTS'
     - if: $GITLAB_USER_ID == "120697"
       variables:
-        RUNNER_TAG: "sasal-home-shell"
+        RUNNER_TAG: "vle-home-shell"
     - if: $GITLAB_USER_ID == "3975485"
       variables:
-        RUNNER_TAG: "vle-home-shell"
+        RUNNER_TAG: "sasal-home-shell"
 
 load_vars:
   stage: prerequisites
@@ -82,7 +82,7 @@ build_all:
   script:
     - |
       for folder in $(find . -type d -name '[0-9]*' \( -not -path "./.git/*" -and -not -path "./roles/*" \)); do
-        packer build -var-file=common-ci.pkrvars.hcl $folder
+        packer build -force -var-file=common-ci.pkrvars.hcl $folder
       done
   needs:
     - job: load_vars
