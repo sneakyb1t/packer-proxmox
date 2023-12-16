@@ -9,7 +9,7 @@ variables:
 
 before_script:
   - packer --version
-  - find . -maxdepth 2 -mindepth 2 -type d \( -not -path "./.git/*" -and -not -path "./roles/*" \) | -exec packer validate
+  - find . -maxdepth 2 -mindepth 2 -type d \( -not -path "./.git/*" -and -not -path "./roles/*" \) | packer validate
 
 stages:
   - prerequisites
