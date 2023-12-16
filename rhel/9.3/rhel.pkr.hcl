@@ -4,6 +4,10 @@ packer {
       version = ">= 1.1.6"
       source  = "github.com/hashicorp/proxmox"
     }
+    ansible = {
+      version = "~> 1"
+      source = "github.com/hashicorp/ansible"
+    }
   }
   required_version = ">= v1.9.4"
 }
@@ -90,7 +94,7 @@ build {
   role_paths = ["roles"]
   extra_arguments = [
     "--extra-vars",
-    "ANSIBLE_BECOME_PASS=${var.vm_password}",     
+    "ANSIBLE_BECOME_PASS=${var.vm_password}",
     "--extra-vars",
     "openscap_hardening=${var.openscap_hardening}"
     ]
