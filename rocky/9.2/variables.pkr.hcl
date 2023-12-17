@@ -196,6 +196,11 @@ variable "vm_swap_size" {
   type    = number
   default = 2048
 }
+
 variable "iso_checksum" {
+  type    = string
+}
+
+variable "openscap_hardening" {
   type    = string
 }
