@@ -11,7 +11,7 @@ Prerequisites
 - A Proxmox environment running version 7.X 8.x
 - A user that has sufficient privileges to create the needed resources
 
-Debian example for packer initialization
+Example for packer initialization
 ```
 packer init debian/12
 ```
