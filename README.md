@@ -2,17 +2,18 @@ Packer for Proxmox
 ===================
 
 This repository provides an easy way to create VM templates in Proxmox using Packer and the Proxmox plugin.
-You can install packer and provision either from Proxmox or any other host that has access to Proxmox API
+You can install packer and provision either from Proxmox or any other host that has access to Proxmox API.
 
 Prerequisites
 =============
 
-- Packer 1.8.6+ installed on your system
+- Packer 1.10.0+ installed on your system
 - A Proxmox environment running version 7.X 8.x
-- A user that has sufficient privileges to create the needed ressources
+- A user that has sufficient privileges to create the needed resources
 
+Debian example for packer initialization
 ```
-packer init require.pkr.hcl
+packer init debian/12
 ```
 
 Installing Packer
@@ -55,18 +56,19 @@ packer build -force -var-file=common.pkrvars.hcl rocky/9.x
 packer build -force -var-file=common.pkrvars.hcl debian/12
 packer build -force -var-file=common.pkrvars.hcl rhel/9.x
 ```
-The flag -force will override the previously created template once the build is finished, each os has it's own value configured in variable proxmox_vm_id in *.auto.pkrvars.hcl files 
+The flag -force will override the previously created template once the build is finished, each OS has its own value configured in variable proxmox_vm_id in *.auto.pkrvars.hcl files.
 
 Customization
 =============
 
 You can customize your template by adding missing values to `variables.hcl` or `distribution-family.hcl`, or you can override any of the values in `variables.hcl` by editing the `common.pkrvars.hcl` file.
-Editing variables in this file will override any default values. 
+Editing variables in this file will override any default values.
 In most common cases, you will just need to uncomment the variables needed in the `common.pkrvars.hcl` file and use your own values.
 
 
 Debugging
-============
+=========
+
 You can use the `--debug` option in Packer to interactively check what's going on during provision along with `PACKER_LOG=1` variable to get more verbose logging.
 
 To enable debug logging, run:
@@ -76,17 +78,20 @@ PACKER_LOG=1 packer build -debug -var-file=common.pkrvars.hcl rocky/9.1
 ```
 
 OS specific instructions
-============
-Each os family has it's specific Readme files for any eventual additional instructions
+========================
+
+Each os family has its specific Readme files for any eventual additional instructions.
 
 Ansible provisioning
-============
-To extend further the customization of your templates you can use ansible roles/playbooks, in this projetc we provide an openscap role to improve verall security of the template.
-Changing the value of "openscap_hardening" to true will execute all openscap remediations for the template you are building via ansible role openscap.
+====================
+
+To extend further your templates customization, you can use ansible roles/playbooks. In this project we provide an openscap role to improve overall security of the template.
+Changing the value of "openscap_hardening" to true will play openscap ansible role and execute all openscap remediations.
 You can find additional details on the ansible role in the role documentation.
 
 Contributing
-===========
-If you think you've found a bug  or you have a question regarding the usage of this software , please reach out to us by opening an issue in this GitHub/Gitlab repository.
-Contributions to this project are welcome: if you want to add a feature or a fix a bug, please do so by opening a Pull Request in this GitHub/Gitlab repository. 
+============
+
+If you think you've found a bug or you have a question regarding the usage of this software, please reach out to us by opening an issue in this GitHub/Gitlab repository.
+Contributions to this project are welcome: if you want to add a feature or a fix a bug, please do so by opening a Pull Request in this GitHub/Gitlab repository.
 In case of feature contribution, please open an issue to discuss it beforehand.
