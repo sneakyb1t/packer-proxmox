@@ -83,6 +83,7 @@ logvol / --fstype ${vm_fs_type} --name=root --vgname=sys --size=${vm_part_root_s
 logvol /tmp --fstype ${vm_fs_type} --name=tmp --vgname=sys --size=${vm_part_tmp_size} --label=TMPFS --fsoptions="nodev,noexec,nosuid"
 logvol /var --fstype ${vm_fs_type} --name=var --vgname=sys --size=${vm_part_var_size} --label=VARFS --fsoptions="nodev"
 logvol /var/log --fstype ${vm_fs_type} --name=log --vgname=sys --size=${vm_part_log_size} --label=LOGFS --fsoptions="nodev,noexec,nosuid"
+logvol /home --fstype ${vm_fs_type} --name=home --vgname=sys --size=${vm_part_home_size} --label=HOMEFS
 logvol /usr --fstype ${vm_fs_type} --name=usr --vgname=sys --size=${vm_part_usr_size} --label=USRFS --fsoptions="nodev"
 ### Modifies the default set of services that will run under the default runlevel.
 services --enabled=NetworkManager,sshd
