@@ -161,6 +161,11 @@ variable "vm_part_log_size" {
   default = "2048"
 }
 
+variable "vm_part_home_size" {
+  type    = string
+  default = "1024"
+}
+
 variable "vm_part_usr_size" {
   type    = string
   default = "6076"
