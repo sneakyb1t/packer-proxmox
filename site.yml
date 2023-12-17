@@ -2,8 +2,7 @@
   become: true
   become_user: root
   become_method: sudo
-  tasks:
-    - name: Include openscap role
-      include_role:
-        name: roles/openscap
-      when: openscap_hardening|bool
+  vars:
+    openscap_hardening: false
+  roles:
+    - { role: roles/openscap, when: openscap_hardening|bool == true }
