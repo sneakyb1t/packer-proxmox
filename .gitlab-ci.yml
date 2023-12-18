@@ -82,10 +82,9 @@ build-debian:
   script:
     - packer build -force -var-file=common-ci.pkrvars.hcl debian/12
   rules:
-    - changes:
-      - debian/12/**.hcl
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-    - if: '$CI_OPEN_MERGE_REQUESTS'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
+      changes:
+        - debian/12/**.hcl
   needs:
     - job: load_vars
 
