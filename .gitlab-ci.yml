@@ -53,24 +53,37 @@ validate:
   needs:
     - job: load_vars
 
-build:
+#build:
+#  stage: build
+#  tags: [$RUNNER_TAG]
+#  script:
+#    - |
+#      echo "${CI_COMMIT_REF_NAME}"
+#      echo "${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}"
+#      export MODIFIED_FILES="$(git diff --name-only origin/${CI_MERGE_REQUEST_TARGET_BRANCH_NAME})"
+#      echo "${MODIFIED_FILES}"
+#      for folder in $(find . -maxdepth 2 -mindepth 2 -type d \( -not -path "./.git/*" -and -not -path "./roles/*" \)); do
+#        if [[ "$MODIFIED_FILES" =~ (^.*${folder/.\//}.*$) ]]; then
+#        echo "Change detected in $folder, building"
+#        packer build -force -var-file=common-ci.pkrvars.hcl $folder
+#        else
+#        echo "No changes in $folder. Skipping build."
+#        fi
+#      done
+#  rules:
+#    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+#    - if: '$CI_OPEN_MERGE_REQUESTS'
+#  needs:
+#    - job: load_vars
+
+build-debian:
   stage: build
   tags: [$RUNNER_TAG]
   script:
-    - |
-      echo "${CI_COMMIT_REF_NAME}"
-      echo "${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}"
-      export MODIFIED_FILES="$(git diff --name-only origin/${CI_MERGE_REQUEST_TARGET_BRANCH_NAME})"
-      echo "${MODIFIED_FILES}"
-      for folder in $(find . -maxdepth 2 -mindepth 2 -type d \( -not -path "./.git/*" -and -not -path "./roles/*" \)); do
-        if [[ "$MODIFIED_FILES" =~ (^.*${folder/.\//}.*$) ]]; then
-        echo "Change detected in $folder, building"
-        packer build -force -var-file=common-ci.pkrvars.hcl $folder
-        else
-        echo "No changes in $folder. Skipping build."
-        fi
-      done
+    - packer build -force -var-file=common-ci.pkrvars.hcl debian/12
   rules:
+    - changes:
+      - debian/12/**.hcl
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     - if: '$CI_OPEN_MERGE_REQUESTS'
   needs:
