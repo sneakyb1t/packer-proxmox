@@ -131,25 +131,6 @@ build-flatcar:
       changes:
         - flatcar/stable/**.hcl
 
-
-
-
-
-
-
-
-#build-debian:
-#  stage: build
-#  tags: [$RUNNER_TAG]
-#  script:
-#    - packer build -force -var-file=common-ci.pkrvars.hcl debian/12
-#  rules:
-#    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
-#      changes:
-#        - debian/12/**.hcl
-#  needs:
-#    - job: load_vars
-
 build_all:
   stage: build
   tags: [$RUNNER_TAG]
