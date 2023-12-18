@@ -59,7 +59,7 @@ validate:
   needs:
     - job: load_vars
 
-build-debian:
+build-debian12:
   extends: .template:build
   script:
     - packer build -force -var-file=common-ci.pkrvars.hcl debian/12
@@ -67,6 +67,76 @@ build-debian:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
       changes:
         - debian/12/**.hcl
+
+build-ubuntu2204:
+  extends: .template:build
+  script:
+    - packer build -force -var-file=common-ci.pkrvars.hcl ubuntu/22.04
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
+      changes:
+        - ubuntu/22.04/**.hcl
+
+build-rocky8:
+  extends: .template:build
+  script:
+    - packer build -force -var-file=common-ci.pkrvars.hcl rocky/8.7
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
+      changes:
+        - rocky/8.7/**.hcl
+
+build-rocky9:
+  extends: .template:build
+  script:
+    - packer build -force -var-file=common-ci.pkrvars.hcl rocky/9.2
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
+      changes:
+        - rocky/9.2/**.hcl
+
+build-rhel8:
+  extends: .template:build
+  script:
+    - packer build -force -var-file=common-ci.pkrvars.hcl rhel/8.9
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
+      changes:
+        - rhel/8.9/**.hcl
+
+build-rhel9:
+  extends: .template:build
+  script:
+    - packer build -force -var-file=common-ci.pkrvars.hcl rhel/9.3
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
+      changes:
+        - rhel/9.3/**.hcl
+
+build-coreos:
+  extends: .template:build
+  script:
+    - packer build -force -var-file=common-ci.pkrvars.hcl coreos/38
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
+      changes:
+        - coreos/38/**.hcl
+
+build-flatcar:
+  extends: .template:build
+  script:
+    - packer build -force -var-file=common-ci.pkrvars.hcl flatcar/stable
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
+      changes:
+        - flatcar/stable/**.hcl
+
+
+
+
+
+
+
 
 #build-debian:
 #  stage: build
