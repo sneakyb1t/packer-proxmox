@@ -29,6 +29,16 @@ workflow:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     - if: '$CI_COMMIT_BRANCH || $CI_COMMIT_TAG || $CI_OPEN_MERGE_REQUESTS'
 
+# Template build for all OS
+.template:build:
+  stage: build
+  tags: [$RUNNER_TAG]
+  needs:
+    - job: load_vars
+  script:
+    - packer build -force -var-file=common-ci.pkrvars.hcl $BUILD_PATH
+
+# Load required variables for build 
 load_vars:
   stage: prerequisites
   tags: [$RUNNER_TAG]
@@ -43,26 +53,23 @@ load_vars:
     paths:
       - common-ci.pkrvars.hcl
 
+#Validate syntax before trying to build 
 validate:
   stage: validate
   tags:
-  - $RUNNER_TAG
+    - $RUNNER_TAG
   script:
-    - find . -maxdepth 2 -mindepth 2 -type d \( -not -path "./.git/*" -and -not -path "./roles/*" \)  |
+    - find . -maxdepth 2 -mindepth 2 -type d \( -not -path "./.git/*" -and -not -path "./roles/*" \) |
       xargs -I {} bash -c "echo 'Validating {}' && packer validate -no-warn-undeclared-var -only=proxmox-iso* -var-file=common-ci.pkrvars.hcl {}"
   needs:
     - job: load_vars
 
-.template:build:
-  stage: build
-  tags: [$RUNNER_TAG]
-  needs:
-    - job: load_vars
+#Build section for each OS 
 
 build-debian12:
   extends: .template:build
-  script:
-    - packer build -force -var-file=common-ci.pkrvars.hcl debian/12
+  variables:
+    BUILD_PATH: "debian/12"
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
       changes:
@@ -70,8 +77,8 @@ build-debian12:
 
 build-ubuntu2204:
   extends: .template:build
-  script:
-    - packer build -force -var-file=common-ci.pkrvars.hcl ubuntu/22.04
+  variables:
+    BUILD_PATH: "ubuntu/22.04"
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
       changes:
@@ -79,8 +86,8 @@ build-ubuntu2204:
 
 build-rocky8:
   extends: .template:build
-  script:
-    - packer build -force -var-file=common-ci.pkrvars.hcl rocky/8.7
+  variables:
+    BUILD_PATH: "rocky/8.7"
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
       changes:
@@ -88,8 +95,8 @@ build-rocky8:
 
 build-rocky9:
   extends: .template:build
-  script:
-    - packer build -force -var-file=common-ci.pkrvars.hcl rocky/9.2
+  variables:
+    BUILD_PATH: "rocky/9.2"
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
       changes:
@@ -97,8 +104,8 @@ build-rocky9:
 
 build-rhel8:
   extends: .template:build
-  script:
-    - packer build -force -var-file=common-ci.pkrvars.hcl rhel/8.9
+  variables:
+    BUILD_PATH: "rhel/8.9"
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
       changes:
@@ -106,8 +113,8 @@ build-rhel8:
 
 build-rhel9:
   extends: .template:build
-  script:
-    - packer build -force -var-file=common-ci.pkrvars.hcl rhel/9.3
+  variables:
+    BUILD_PATH: "rhel/9.3"
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
       changes:
@@ -115,8 +122,8 @@ build-rhel9:
 
 build-coreos:
   extends: .template:build
-  script:
-    - packer build -force -var-file=common-ci.pkrvars.hcl coreos/38
+  variables:
+    BUILD_PATH: "coreos/38"
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
       changes:
@@ -124,8 +131,8 @@ build-coreos:
 
 build-flatcar:
   extends: .template:build
-  script:
-    - packer build -force -var-file=common-ci.pkrvars.hcl flatcar/stable
+  variables:
+    BUILD_PATH: "flatcar/stable"
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
       changes:
@@ -142,4 +149,3 @@ build_all:
   needs:
     - job: load_vars
   when: manual
-
