@@ -38,7 +38,7 @@ workflow:
   script:
     - packer build -force -var-file=common-ci.pkrvars.hcl $BUILD_PATH
 
-# Load required variables for build 
+# Load required variables for build
 load_vars:
   stage: prerequisites
   tags: [$RUNNER_TAG]
@@ -53,7 +53,7 @@ load_vars:
     paths:
       - common-ci.pkrvars.hcl
 
-#Validate syntax before trying to build 
+# Validate syntax before trying to build
 validate:
   stage: validate
   tags:
@@ -64,8 +64,7 @@ validate:
   needs:
     - job: load_vars
 
-#Build section for each OS 
-
+# Build section for each OS
 build-debian12:
   extends: .template:build
   variables:
