@@ -99,7 +99,7 @@ variable "vm_timezone" {
 
 variable "vm_memory" {
   type = number
-  default = 512
+  default = 2048
 }
 
 variable "vm_disk_size" {
@@ -189,7 +189,7 @@ variable "timeout" {
 
 variable "ssh_private_key" {
   type    = string
-  default = "~/.ssh/id_rsa"
+  default = null
 }
 
 variable "vm_swap_size" {
