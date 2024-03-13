@@ -1,0 +1,5 @@
+iso_url               = "https://download.rockylinux.org/pub/rocky/9/isos/x86_64/Rocky-9.3-x86_64-minimal.iso"
+proxmox_template_name = "rocky9-template"
+vm_hostname           = "rocky9"
+iso_checksum          = "eef8d26018f4fcc0dc101c468f65cbf588f2184900c556f243802e9698e56729"
+proxmox_vm_id         = "907"
