@@ -37,6 +37,10 @@ variable "proxmox_storage_pool" {
   type = string
 }
 
+variable "proxmox_iso_storage" {
+  type = string
+}
+
 variable "proxmox_scsi_controller" {
   type    = string
   default = "virtio-scsi-pci"
