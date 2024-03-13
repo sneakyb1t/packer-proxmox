@@ -27,7 +27,7 @@ source "proxmox-iso" "rhel9" {
 
   scsi_controller          = var.proxmox_scsi_controller
   insecure_skip_tls_verify = var.proxmox_insecure
-  iso_file                 = "${var.proxmox_datastore}:iso/${var.iso_file}"
+  iso_file                 = "${var.proxmox_iso_storage}:iso/${var.iso_file}"
   os		           = var.vm_os
   cpu_type                 = var.vm_cpu_type
   cores                    = var.vm_cores
