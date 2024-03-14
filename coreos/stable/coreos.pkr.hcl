@@ -8,7 +8,7 @@ packer {
   required_version = ">= v1.9.4"
 }
 source "proxmox-iso" "coreos" {
-  boot_wait    = "15s"
+  boot_wait    = "10s"
   boot_command = ["<up>e<down><down><end> ignition.config.url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/installer.ign<leftCtrlOn>x<leftCtrlOff>"]
   disks {
     type              = var.vm_disk_type
