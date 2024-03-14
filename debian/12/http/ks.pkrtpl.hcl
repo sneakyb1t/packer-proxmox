@@ -150,7 +150,7 @@ d-i netcfg/get_domain string unassigned-domain
 # Default value for the mirror protocol: http.
 #d-i mirror/protocol string ftp
 d-i mirror/country string manual
-d-i mirror/http/hostname string http.us.debian.org
+d-i mirror/http/hostname string deb.debian.org
 d-i mirror/http/directory string /debian
 d-i mirror/http/proxy string
 
