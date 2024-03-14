@@ -52,7 +52,7 @@ variable "iso_url" {
 
 variable "boot_wait" {
   type    = string
-  default = "15s"
+  default = "20s"
 }
 
 variable "vm_username" {
