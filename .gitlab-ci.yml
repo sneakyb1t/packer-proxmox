@@ -37,6 +37,12 @@ workflow:
     - job: load_vars
   script:
     - packer build -force -var-file=common-ci.pkrvars.hcl $BUILD_PATH
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
+      changes:
+        - $BUILD_PATH/**.hcl
+    - if: '$CI_PIPELINE_SOURCE != "merge_request_event" || $CI_OPEN_MERGE_REQUEST == null'
+      when: manual
 
 # Load required variables for build
 load_vars:
@@ -69,73 +75,41 @@ build-debian12:
   extends: .template:build
   variables:
     BUILD_PATH: "debian/12"
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
-      changes:
-        - debian/12/**.hcl
 
 build-ubuntu2204:
   extends: .template:build
   variables:
     BUILD_PATH: "ubuntu/22.04"
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
-      changes:
-        - ubuntu/22.04/**.hcl
 
 build-rocky8:
   extends: .template:build
   variables:
     BUILD_PATH: "rocky/8.7"
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
-      changes:
-        - rocky/8.7/**.hcl
 
 build-rocky9:
   extends: .template:build
   variables:
     BUILD_PATH: "rocky/9.2"
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
-      changes:
-        - rocky/9.2/**.hcl
 
 build-rhel8:
   extends: .template:build
   variables:
     BUILD_PATH: "rhel/8.9"
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
-      changes:
-        - rhel/8.9/**.hcl
 
 build-rhel9:
   extends: .template:build
   variables:
     BUILD_PATH: "rhel/9.3"
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
-      changes:
-        - rhel/9.3/**.hcl
 
 build-coreos:
   extends: .template:build
   variables:
     BUILD_PATH: "coreos/38"
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
-      changes:
-        - coreos/38/**.hcl
 
 build-flatcar:
   extends: .template:build
   variables:
     BUILD_PATH: "flatcar/stable"
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_OPEN_MERGE_REQUESTS'
-      changes:
-        - flatcar/stable/**.hcl
 
 build_all:
   stage: build
