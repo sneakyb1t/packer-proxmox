@@ -22,7 +22,7 @@ workflow:
       when: never
     - if: $GITLAB_USER_ID == "120697"
       variables:
-        RUNNER_TAG: "sasal-home-shell"
+        RUNNER_TAG: "vle-home-shell"
     - if: $GITLAB_USER_ID == "3975485"
       variables:
         RUNNER_TAG: "sasal-home-shell"
