@@ -84,12 +84,12 @@ build-ubuntu2204:
 build-rocky8:
   extends: .template:build
   variables:
-    BUILD_PATH: "rocky/8.7"
+    BUILD_PATH: "rocky/8"
 
 build-rocky9:
   extends: .template:build
   variables:
-    BUILD_PATH: "rocky/9.2"
+    BUILD_PATH: "rocky/9"
 
 build-rhel8:
   extends: .template:build
