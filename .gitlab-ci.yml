@@ -104,7 +104,7 @@ build-rhel9:
 build-coreos:
   extends: .template:build
   variables:
-    BUILD_PATH: "coreos/38"
+    BUILD_PATH: "coreos/stable"
 
 build-flatcar:
   extends: .template:build
