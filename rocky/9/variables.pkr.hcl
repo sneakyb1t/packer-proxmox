@@ -103,7 +103,7 @@ variable "vm_timezone" {
 
 variable "vm_memory" {
   type = number
-  default = 512
+  default = 2048
 }
 
 variable "vm_disk_size" {
