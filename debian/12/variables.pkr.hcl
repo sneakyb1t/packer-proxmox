@@ -117,11 +117,6 @@ variable "vm_memory" {
   default = 2048
 }
 
-variable "vm_disk_size" {
-  type    = string
-  default = "15360M"
-}
-
 variable "vm_disk_type" {
   type    = string
   default = "virtio"
@@ -143,6 +138,11 @@ variable "vm_net_firewall" {
 }
 
 // Partitioning
+variable "vm_disk_size" {
+  type    = string
+  default = "30720M"
+}
+
 variable "vm_part_efi_size" {
   type    = number
   default = 100
@@ -165,7 +165,7 @@ variable "vm_part_tmp_size" {
 
 variable "vm_part_var_size" {
   type    = number
-  default = 2048
+  default = 4096
 }
 
 variable "vm_part_log_size" {
