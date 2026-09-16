@@ -1,0 +1,5 @@
+iso_url               = "https://cdimage.debian.org/cdimage/release/13.7.0/amd64/iso-cd/debian-13.7.0-amd64-netinst.iso"
+proxmox_template_name = "debian-13-template"
+vm_hostname           = "debian-13-template"
+iso_checksum          = "a7ef94ac2fb9a7fec454552abd629b7cc9d5155c886165a45649f5ce6167e355"
+proxmox_vm_id         = "900"
